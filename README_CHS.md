@@ -142,7 +142,7 @@
 
 # 支持
 - 加入我们的[Discord](https://discord.gg/SQr2tXJgVq)服务器！您可以经常询问有关VVVF-SIM的问题！
-- [示例文件](https://github.com/VvvfGeeks/VVVF-Simulator/releases/download/v1.9.1.0/yaml_samples.zip)
+- [示例文件](https://github.com/VvvfGeeks/YAML-Files)
 
 # 相关项目
  - [Raspberry Pi Pico Drive](https://github.com/VvvfGeeks/RPi-Pico-Drive)

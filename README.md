@@ -122,7 +122,7 @@ I highly suggest looking at the sample VVVF files as messing with those will mak
 
 # Support
 - Join our [discord](https://discord.gg/SQr2tXJgVq)! You can ask frequently about vvvf simulator!
-- [Sample Files](https://github.com/VvvfGeeks/VVVF-Simulator/releases/download/v1.9.1.0/yaml_samples.zip)
+- [Sample Files](https://github.com/VvvfGeeks/YAML-Files)
 
 # Related projects
  - [Raspberry Pi Pico Drive](https://github.com/VvvfGeeks/RPi-Pico-Drive)
