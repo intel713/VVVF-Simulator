@@ -1,4 +1,4 @@
-﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:system="clr-namespace:System;assembly=mscorlib">
 
@@ -485,6 +485,7 @@
     <system:String x:Key="Resource.Language.FriendlyNameConverter.PulseAlternative.Name.Default">Default</system:String>
     <system:String x:Key="Resource.Language.FriendlyNameConverter.PulseAlternative.Name.Shifted">Shifted</system:String>
     <system:String x:Key="Resource.Language.FriendlyNameConverter.PulseAlternative.Name.CP">Center Pulse</system:String>
+    <system:String x:Key="Resource.Language.FriendlyNameConverter.PulseAlternative.Name.ShiftedCP">Shifted Center Pulse</system:String>
     <system:String x:Key="Resource.Language.FriendlyNameConverter.PulseAlternative.Name.Square">Square</system:String>
     <system:String x:Key="Resource.Language.FriendlyNameConverter.PulseAlternative.Name.Alt">Alternate</system:String>
 
