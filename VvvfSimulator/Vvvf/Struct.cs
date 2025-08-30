@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using static VvvfSimulator.Yaml.VvvfSound.YamlVvvfSoundData.YamlControlData;
 using static VvvfSimulator.Yaml.VvvfSound.YamlVvvfSoundData.YamlControlData.YamlPulseMode;
 
@@ -201,19 +201,19 @@ namespace VvvfSimulator.Vvvf
         {
             public static int[] GetAvailablePulseCount(PulseTypeName PulseType, int Level)
             {
-                if(Level == 2)
+                if (Level == 2)
                 {
                     return PulseType switch
                     {
                         PulseTypeName.SYNC => [-1],
-                        PulseTypeName.HO => [5,7,9,11,13,15,17],
-                        PulseTypeName.SHE => [3,5,7,9,11,13,15,17],
-                        PulseTypeName.CHM => [3,5,7,9,11,13,15,17,19,21,23,25],
+                        PulseTypeName.HO => [5, 7, 9, 11, 13, 15, 17],
+                        PulseTypeName.SHE => [3, 5, 7, 9, 11, 13, 15, 17],
+                        PulseTypeName.CHM => [3, 5, 7, 9, 11, 13, 15, 17, 19, 21, 23, 25],
                         _ => [],
                     };
                 }
 
-                if(Level == 3)
+                if (Level == 3)
                 {
                     return PulseType switch
                     {
@@ -240,6 +240,7 @@ namespace VvvfSimulator.Vvvf
                 if (Level == 2)
                 {
                     if (PulseMode.Alternative == PulseAlternative.CP) return true;
+                    if (PulseMode.Alternative == PulseAlternative.ShiftedCP) return true;
                     if (PulseMode.Alternative == PulseAlternative.Shifted) return true;
                     if (PulseMode.Alternative > PulseAlternative.Default) return false;
                     if (PulseMode.PulseType == PulseTypeName.SYNC)
@@ -271,7 +272,7 @@ namespace VvvfSimulator.Vvvf
                 {
                     PulseAlternative[] Alternatives = new PulseAlternative[Custom.Length + X + 1];
                     Alternatives[0] = PulseAlternative.Default;
-                    for(int i = 0; i < Custom.Length;i++)
+                    for (int i = 0; i < Custom.Length; i++)
                         Alternatives[i + 1] = Custom[i];
                     for (int i = 0; i < X; i++)
                     {
@@ -282,7 +283,7 @@ namespace VvvfSimulator.Vvvf
 
                 if (Level == 3)
                 {
-                    if(PulseType == PulseTypeName.SYNC)
+                    if (PulseType == PulseTypeName.SYNC)
                     {
                         return PulseCount switch
                         {
@@ -292,7 +293,7 @@ namespace VvvfSimulator.Vvvf
                         };
                     }
 
-                    if(PulseType == PulseTypeName.ASYNC)
+                    if (PulseType == PulseTypeName.ASYNC)
                     {
                         return [PulseAlternative.Default, PulseAlternative.Shifted];
                     }
@@ -326,26 +327,26 @@ namespace VvvfSimulator.Vvvf
 
                     return [PulseAlternative.Default];
                 }
-                
+
                 if (Level == 2)
                 {
                     if (PulseType == PulseTypeName.SYNC)
                     {
                         return PulseCount switch
                         {
-                            3 => AlternativesDefaultToX(1, [PulseAlternative.Shifted, PulseAlternative.CP, PulseAlternative.Square,]),
-                            5 => AlternativesDefaultToX(1, [PulseAlternative.Shifted, PulseAlternative.CP, PulseAlternative.Square,]),
-                            6 => AlternativesDefaultToX(1, [PulseAlternative.Shifted, PulseAlternative.CP, PulseAlternative.Square,]),
-                            8 => AlternativesDefaultToX(1, [PulseAlternative.Shifted, PulseAlternative.CP, PulseAlternative.Square,]),
-                            9 => AlternativesDefaultToX(1, [PulseAlternative.Shifted, PulseAlternative.CP, PulseAlternative.Square,]),
-                            11 => AlternativesDefaultToX(1, [PulseAlternative.Shifted, PulseAlternative.CP, PulseAlternative.Square,]),
-                            13 => AlternativesDefaultToX(1, [PulseAlternative.Shifted, PulseAlternative.CP, PulseAlternative.Square,]),
-                            17 => AlternativesDefaultToX(1, [PulseAlternative.Shifted, PulseAlternative.CP, PulseAlternative.Square,]),
-                            _ => [PulseAlternative.Default, PulseAlternative.Shifted, PulseAlternative.CP, PulseAlternative.Square,],
+                            3 => AlternativesDefaultToX(1, [PulseAlternative.Shifted, PulseAlternative.CP, PulseAlternative.ShiftedCP, PulseAlternative.Square,]),
+                            5 => AlternativesDefaultToX(1, [PulseAlternative.Shifted, PulseAlternative.CP, PulseAlternative.ShiftedCP, PulseAlternative.Square,]),
+                            6 => AlternativesDefaultToX(1, [PulseAlternative.Shifted, PulseAlternative.CP, PulseAlternative.ShiftedCP, PulseAlternative.Square,]),
+                            8 => AlternativesDefaultToX(1, [PulseAlternative.Shifted, PulseAlternative.CP, PulseAlternative.ShiftedCP, PulseAlternative.Square,]),
+                            9 => AlternativesDefaultToX(1, [PulseAlternative.Shifted, PulseAlternative.CP, PulseAlternative.ShiftedCP, PulseAlternative.Square,]),
+                            11 => AlternativesDefaultToX(1, [PulseAlternative.Shifted, PulseAlternative.CP, PulseAlternative.ShiftedCP, PulseAlternative.Square,]),
+                            13 => AlternativesDefaultToX(1, [PulseAlternative.Shifted, PulseAlternative.CP, PulseAlternative.ShiftedCP, PulseAlternative.Square,]),
+                            17 => AlternativesDefaultToX(1, [PulseAlternative.Shifted, PulseAlternative.CP, PulseAlternative.ShiftedCP, PulseAlternative.Square,]),
+                            _ => [PulseAlternative.Default, PulseAlternative.Shifted, PulseAlternative.CP, PulseAlternative.ShiftedCP, PulseAlternative.Square,],
                         };
                     }
 
-                    if(PulseType == PulseTypeName.ASYNC)
+                    if (PulseType == PulseTypeName.ASYNC)
                     {
                         return [PulseAlternative.Default, PulseAlternative.Shifted];
                     }
@@ -409,17 +410,19 @@ namespace VvvfSimulator.Vvvf
             public static PulseDataKey[] GetAvailablePulseDataKey(YamlPulseMode PulseMode, int Level)
             {
 
-                if(Level == 2)
+                if (Level == 2)
                 {
                     return PulseMode.PulseType switch
                     {
                         PulseTypeName.SYNC => PulseMode.PulseCount switch
                         {
-                            3 => PulseMode.Alternative switch {
+                            3 => PulseMode.Alternative switch
+                            {
                                 PulseAlternative.Alt1 => [PulseDataKey.Phase],
                                 _ => [],
                             },
-                            6 => PulseMode.Alternative switch { 
+                            6 => PulseMode.Alternative switch
+                            {
                                 PulseAlternative.Alt1 => [PulseDataKey.PulseWidth],
                                 _ => [],
                             },
@@ -434,7 +437,7 @@ namespace VvvfSimulator.Vvvf
                     };
                 }
 
-                if(Level == 3)
+                if (Level == 3)
                 {
                     return PulseMode.PulseType switch
                     {
