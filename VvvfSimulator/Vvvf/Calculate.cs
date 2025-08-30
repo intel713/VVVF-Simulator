@@ -756,9 +756,6 @@ namespace VvvfSimulator.Vvvf
                         double SineVal = GetBaseWaveform(PulseMode.Clone(), SineX, Amplitude, Control.GetGenerationCurrentTime(), InitialPhase, SawTime);
                         double SawVal = Saw(SawTime * SawAngleFrequency);
 
-                        //SineVal += 0.25 * Sine(SineX) * Math.Pow(-1, Math.Floor(M_1_PI * (M_2PI * 750 * SawTime + M_PI_3)));
-                        //SineVal += A_hfi * Sine(SineX) * Math.Cos(M_2PI * F_hfi * SawTime);
-
                         if (PulseMode.Alternative == PulseAlternative.Shifted)
                             SawVal = -SawVal;
 
