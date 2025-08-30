@@ -498,6 +498,7 @@
     <system:String x:Key="Resource.Language.FriendlyNameConverter.PulseHarmonicType.Name.Sine">Sinusoidal</system:String>
     <system:String x:Key="Resource.Language.FriendlyNameConverter.PulseHarmonicType.Name.Saw">Triangle</system:String>
     <system:String x:Key="Resource.Language.FriendlyNameConverter.PulseHarmonicType.Name.Square">Square</system:String>
+    <system:String x:Key="Resource.Language.FriendlyNameConverter.PulseHarmonicType.Name.HFIsquare">HFI</system:String>
 
     <system:String x:Key="Resource.Language.FriendlyNameConverter.DiscreteTimeMode.Name.Left">Left</system:String>
     <system:String x:Key="Resource.Language.FriendlyNameConverter.DiscreteTimeMode.Name.Middle">Middle</system:String>
