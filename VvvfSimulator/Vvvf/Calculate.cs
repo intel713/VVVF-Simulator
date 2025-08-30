@@ -1,4 +1,4 @@
-using System; //asdfff
+using System;
 using System.Collections.Generic;
 using System.Windows.Media.Animation;
 using static VvvfSimulator.Vvvf.MyMath;
