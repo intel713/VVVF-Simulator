@@ -756,6 +756,9 @@ namespace VvvfSimulator.Vvvf
                         double SineVal = GetBaseWaveform(PulseMode.Clone(), SineX, Amplitude, Control.GetGenerationCurrentTime(), InitialPhase, SawTime);
                         double SawVal = Saw(SawTime * SawAngleFrequency);
 
+                        //SineVal += 0.25 * Sine(SineX) * Math.Pow(-1, Math.Floor(M_1_PI * (M_2PI * 750 * SawTime + M_PI_3)));
+                        //SineVal += A_hfi * Sine(SineX) * Math.Cos(M_2PI * F_hfi * SawTime);
+
                         if (PulseMode.Alternative == PulseAlternative.Shifted)
                             SawVal = -SawVal;
 
@@ -827,15 +830,21 @@ namespace VvvfSimulator.Vvvf
                         if(Alternate == PulseAlternative.CP)
                         {
                             double SineVal = GetBaseWaveform(PulseMode.Clone(), SineX, Amplitude, Control.GetGenerationCurrentTime(), InitialPhase, SawTime);
+                            int CarrierFrequency = PulseMode.PulseCount / 2 * 6;
+                            double SawVal = CarrierFrequency == 0 ? 0 : (Saw(CarrierFrequency * SineX + M_PI_2) * ((PulseMode.PulseCount % 2 == 1) ? 0.5 : -0.5) + 0.5);
+                            double X = SineAngleFrequency * SineTime + InitialPhase;
+                            double CycleX = X % M_2PI;
+                            int Orthant = (int)((X % M_PI) / M_PI_3);
+                            if (CycleX >= M_PI) SawVal = -SawVal;
+                            if (Orthant != 1) SawVal = 0;
 
-                            //int CarrierFrequency = PulseMode.PulseCount / 2 * 6;
-                            //double SawVal = CarrierFrequency == 0 ? 0 : (Saw(CarrierFrequency * SineX + M_PI_2) * ((PulseMode.PulseCount % 2 == 1) ? 0.5 : -0.5) + 0.5);
-                            //double X = SineAngleFrequency * SineTime + InitialPhase;
-                            //double CycleX = X % M_2PI;
-                            //int Orthant = (int)((X % M_PI) / M_PI_3);
-                            //if (CycleX >= M_PI) SawVal = -SawVal;
-                            //if (Orthant != 1) SawVal = 0;
+                            return ModulateSignal(SineVal, SawVal) * 2;
+                        }
 
+                        // SYNC N WITH SHIFTED CP CONFIGURATION
+                        if (Alternate == PulseAlternative.ShiftedCP)
+                        {
+                            double SineVal = GetBaseWaveform(PulseMode.Clone(), SineX, Amplitude, Control.GetGenerationCurrentTime(), InitialPhase, SawTime);
                             int n = (PulseMode.PulseCount + 1) / 4;
                             double X = SineAngleFrequency * SineTime + InitialPhase;
                             double P = Math.Pow(-1, Math.Floor(3 * n * M_1_PI * X)) * Math.Pow(-1, Math.Floor(3 * M_1_PI * X));
