@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
@@ -239,7 +239,7 @@ namespace VvvfSimulator.Yaml.VvvfSound
                 public PulseAlternative Alternative { get; set; } = PulseAlternative.Default;
                 public enum PulseAlternative
                 {
-                    Default, Shifted, CP, Square,
+                    Default, Shifted, CP, ShiftedCP, Square,
                     Alt1, Alt2, Alt3, Alt4, Alt5, Alt6, Alt7, Alt8, Alt9, Alt10,
                     Alt11, Alt12, Alt13, Alt14, Alt15, Alt16, Alt17, Alt18, Alt19, Alt20,
                     Alt21, Alt22, Alt23, Alt24, Alt25, Alt26, Alt27, Alt28, Alt29, Alt30,
@@ -290,7 +290,7 @@ namespace VvvfSimulator.Yaml.VvvfSound
 
                     public enum PulseHarmonicType
                     {
-                        Sine, Saw, Square
+                        Sine, Saw, Square, HFIsquare
                     }
 
                     public PulseHarmonic Clone()
