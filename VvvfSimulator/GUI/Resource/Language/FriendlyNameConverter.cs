@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using VvvfSimulator.GUI.Resource.Theme;
 using VvvfSimulator.GUI.Simulator.RealTime.Controller;
@@ -220,6 +220,7 @@ namespace VvvfSimulator.GUI.Resource.Language
                 PulseAlternative.Default => LanguageManager.GetString("Resource.Language.FriendlyNameConverter.PulseAlternative.Name.Default"),
                 PulseAlternative.Shifted => LanguageManager.GetString("Resource.Language.FriendlyNameConverter.PulseAlternative.Name.Shifted"),
                 PulseAlternative.CP => LanguageManager.GetString("Resource.Language.FriendlyNameConverter.PulseAlternative.Name.CP"),
+                PulseAlternative.ShiftedCP => LanguageManager.GetString("Resource.Language.FriendlyNameConverter.PulseAlternative.Name.ShiftedCP"),
                 PulseAlternative.Square => LanguageManager.GetString("Resource.Language.FriendlyNameConverter.PulseAlternative.Name.Square"),
                 _ => LanguageManager.GetString("Resource.Language.FriendlyNameConverter.PulseAlternative.Name.Alt") + ((int)Mode - (int)PulseAlternative.Alt1 + 1),
             };
