@@ -1,3 +1,16 @@
+# This is a fork of the VVVF simulator.
+This fork currently supports experimental features like
+- Random Switching Modulation (To enable this, enter any negative value in the Range section)
+- Shifted Center Pulses (Only available with 4N-1 pulses)
+- HFI and Random HFI
+- Improved three-level Dipolar Bias (0 - 1 : three-level - two-level)
+
+And the following features are planned
+- Make options for selecting Random and Random SW
+- Removal of phase modification for square N pulses
+
+[Sample file for this fork (TOSHIBA VVVF for PMSM [WIP])](https://drive.google.com/file/d/1lw2cEoexTEOQO8Lz4UkATEwgn2ap8KZS/view?usp=sharing)
+
 # Language
 - English (Current language)
 - [日本語](README_JPN.md)
@@ -140,3 +153,4 @@ I highly suggest looking at the sample VVVF files as messing with those will mak
  - Simplified Chinese
     - [02001](https://github.com/Jerethon)
     - [YAJ-54S12G-1](https://github.com/YJ-305-A2)
+
