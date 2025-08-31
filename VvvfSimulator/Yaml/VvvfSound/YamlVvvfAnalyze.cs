@@ -290,7 +290,7 @@ namespace VvvfSimulator.Yaml.VvvfSound
 
                     public enum PulseHarmonicType
                     {
-                        Sine, Saw, Square, HFIsquare
+                        Sine, Saw, Square, HFI
                     }
 
                     public PulseHarmonic Clone()

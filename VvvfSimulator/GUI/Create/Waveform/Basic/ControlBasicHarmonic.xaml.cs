@@ -42,7 +42,7 @@ namespace VvvfSimulator.GUI.Create.Waveform.Basic
                     ];
                 case PresetHarmonics.HFI:
                     return [
-                        new () { Amplitude = 0.5, Harmonic = 250, IsAmplitudeProportional=false, IsHarmonicProportional = false}
+                        new () { Amplitude = 0.25, Harmonic = 250, Type = PulseHarmonic.PulseHarmonicType.HFI, IsAmplitudeProportional=false, IsHarmonicProportional = false}
                     ];
                 case PresetHarmonics.DPM1:
                     return [

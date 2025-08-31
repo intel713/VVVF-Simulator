@@ -57,7 +57,11 @@ namespace VvvfSimulator.Vvvf
                     PulseHarmonic.PulseHarmonicType.Sine => Sine(harmonic_x),
                     PulseHarmonic.PulseHarmonicType.Saw => -Saw(harmonic_x),
                     PulseHarmonic.PulseHarmonicType.Square => Square(harmonic_x),
-                    PulseHarmonic.PulseHarmonicType.HFIsquare => Sine(x) * Math.Pow(-1, Math.Floor(M_1_PI * (M_2PI * harmonic.Harmonic * sawtime + M_PI_3))),
+                    PulseHarmonic.PulseHarmonicType.HFI => harmonic.IsHarmonicProportional switch
+                    {
+                        true => Sine(x) * Math.Pow(-1, Math.Floor(M_1_PI * (M_2PI * harmonic.Harmonic * sawtime + M_PI_3))),
+                        false => Sine(x) * Math.Pow(-1, Math.Floor(M_1_PI * (M_2PI * harmonic.Harmonic * T + M_PI_3)))
+                    },
                     _ => throw new NotImplementedException(),
                 };
                 BaseValue += harmonic_value * harmonic.Amplitude * (harmonic.IsAmplitudeProportional ? amplitude : 1);
