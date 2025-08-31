@@ -216,13 +216,22 @@ namespace VvvfSimulator.Vvvf
                 {
                     Random rnd = new();
                     double silent_random_freq = data.BaseFrequency;
-                    if (rnd.NextDouble() < 0.5)
+                    if (data.Range >= 0)
                     {
-                        silent_random_freq += data.Range;
+                        double diff_freq = rnd.NextDouble() * data.Range;
+                        if (rnd.NextDouble() < 0.5) diff_freq = -diff_freq;
+                        silent_random_freq = data.BaseFrequency + diff_freq;
                     }
                     else
                     {
-                        silent_random_freq -= data.Range;
+                        if (rnd.NextDouble() < 0.5)
+                        {
+                            silent_random_freq += data.Range;
+                        }
+                        else
+                        {
+                            silent_random_freq -= data.Range;
+                        }
                     }
                     random_freq = silent_random_freq;
                     control.SetPreviousSawRandomFrequency(silent_random_freq);
