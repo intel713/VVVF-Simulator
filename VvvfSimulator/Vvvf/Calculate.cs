@@ -365,9 +365,9 @@ namespace VvvfSimulator.Vvvf
                             SawVal = -SawVal;
 
                         double Dipolar = PulseData.GetValueOrDefault(PulseDataKey.Dipolar, -1);
-                        double d = 0.5 * (Dipolar != -1 ? Dipolar : 0);
+                        double DipolarBias = (Dipolar != -1 ? Dipolar : 0);
 
-                        return ModulateSignal(0.5 * (2 - d) * SineVal, SawVal + 0.5 - d) + ModulateSignal(0.5 * (2 - d) * SineVal, SawVal - 0.5 + d);
+                        return ModulateSignal(SineVal, 0.5 * (SawVal + 1 - DipolarBias)) + ModulateSignal(SineVal, 0.5 * (SawVal - 1 + DipolarBias));
                     }
                 case PulseTypeName.SYNC:
                     {
@@ -393,7 +393,7 @@ namespace VvvfSimulator.Vvvf
                                 double Period = SineX % M_2PI;
                                 int Orthant = (int)(Period / M_PI_2);
                                 double Quater = Period % M_PI_2;
-
+                                    
                                 int _GetPwm(double t)
                                 {
                                     double a = M_PI_2 - Value.Amplitude;
@@ -421,12 +421,12 @@ namespace VvvfSimulator.Vvvf
                                 SawVal = -SawVal;
 
                             double Dipolar = PulseData.GetValueOrDefault(PulseDataKey.Dipolar, -1);
-                            SawVal *= (Dipolar != -1 ? Dipolar : 0.5);
+                            double DipolarBias = (Dipolar != -1 ? Dipolar : 0);
 
                             Control.SetSawAngleFrequency(SineAngleFrequency * PulseCount);
                             Control.SetSawTime(SineTime);
 
-                            return ModulateSignal(SineVal, SawVal + 0.5) + ModulateSignal(SineVal, SawVal - 0.5);
+                            return ModulateSignal(SineVal, 0.5 * (SawVal + 1 - DipolarBias)) + ModulateSignal(SineVal, 0.5 * (SawVal - 1 + DipolarBias));
                         }                        
                     }
                 case PulseTypeName.SHE:
