@@ -1,15 +1,15 @@
 # This is a fork of the VVVF simulator.
 This fork currently supports experimental features like
 - Random Switching Modulation (To enable this, enter any negative value in the `Range` section)
-- Shifted Center Pulses (Only available with 4N+1 pulses)
+- Shifted Center Pulses (Only available with 4N+3 pulses)
 - HFI and Random HFI (To use Random HFI, check the `Harmonic Professional` box in the `Harmonic Settings` menu)
 - Improved three-level Dipolar Bias (0 - 1 : three-level - two-level)
 
 And the following features are planned
 - Make options for selecting Random and Random SW
-- Only enable Shifted CP option with 4N+1 pulses
 - Improve RHFI
-- Removal of phase modification for square N pulses
+- ✅ ~~Only enable Shifted CP option with 4N+3 pulses~~
+- ✅ ~~Removal of phase modification for square N pulses~~
 
 Some features may be unstable.
 
@@ -157,6 +157,7 @@ I highly suggest looking at the sample VVVF files as messing with those will mak
  - Simplified Chinese
     - [02001](https://github.com/Jerethon)
     - [YAJ-54S12G-1](https://github.com/YJ-305-A2)
+
 
 
 
