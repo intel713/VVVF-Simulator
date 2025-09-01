@@ -11,6 +11,8 @@ And the following features are planned
 - Improve RHFI
 - Removal of phase modification for square N pulses
 
+Some features may be unstable.
+
 [Sample file for this fork (TOSHIBA VVVF for PMSM [WIP])](https://drive.google.com/file/d/1lw2cEoexTEOQO8Lz4UkATEwgn2ap8KZS/view?usp=sharing)
 
 # Language
@@ -155,6 +157,7 @@ I highly suggest looking at the sample VVVF files as messing with those will mak
  - Simplified Chinese
     - [02001](https://github.com/Jerethon)
     - [YAJ-54S12G-1](https://github.com/YJ-305-A2)
+
 
 
 
