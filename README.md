@@ -8,6 +8,7 @@ This fork currently supports experimental features like
 And the following features are planned
 - Make options for selecting Random and Random SW
 - Improve RHFI
+- Conform before pattern reset
 - ✅ ~~Only enable Shifted CP option with 4N+3 pulses~~
 - ✅ ~~Removal of phase modification for square N pulses~~
 
@@ -157,6 +158,7 @@ I highly suggest looking at the sample VVVF files as messing with those will mak
  - Simplified Chinese
     - [02001](https://github.com/Jerethon)
     - [YAJ-54S12G-1](https://github.com/YJ-305-A2)
+
 
 
 
