@@ -222,7 +222,7 @@ namespace VvvfSimulator.Vvvf
         }
         public static double GetSyncFiveAlt2Sine(double x, double a)
         {
-            if (a >= 1) a = 0.99999;
+            if (a >= 1) a = 0.99999; // THIS NEEDS TO BE FIXED
             else if (a < 0) a = 0;
 
             if ((0 <= x && x < M_PI_12) || (11 * M_PI_12 < x && x < M_PI))
