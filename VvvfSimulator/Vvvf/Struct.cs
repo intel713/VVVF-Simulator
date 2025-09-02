@@ -342,9 +342,9 @@ namespace VvvfSimulator.Vvvf
                             11 => AlternativesDefaultToX(1, [PulseAlternative.Shifted, PulseAlternative.CP, PulseAlternative.ShiftedCP, PulseAlternative.Square,]),
                             13 => AlternativesDefaultToX(1, [PulseAlternative.Shifted, PulseAlternative.CP, PulseAlternative.Square,]),
                             17 => AlternativesDefaultToX(1, [PulseAlternative.Shifted, PulseAlternative.CP, PulseAlternative.Square,]),
-                            _ => (PulseCount + 1) % 4 == 0 ?
-                            [PulseAlternative.Default, PulseAlternative.Shifted, PulseAlternative.CP, PulseAlternative.ShiftedCP, PulseAlternative.Square,] : 
-                            [PulseAlternative.Default, PulseAlternative.Shifted, PulseAlternative.CP, PulseAlternative.Square,],
+                            _ => (PulseCount + 1) % 4 == 0
+                            ? [PulseAlternative.Default, PulseAlternative.Shifted, PulseAlternative.CP, PulseAlternative.ShiftedCP, PulseAlternative.Square,]
+                            : [PulseAlternative.Default, PulseAlternative.Shifted, PulseAlternative.CP, PulseAlternative.Square,],
                         };
                     }
 
