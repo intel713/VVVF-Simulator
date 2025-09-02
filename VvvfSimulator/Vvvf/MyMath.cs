@@ -14,6 +14,7 @@ namespace VvvfSimulator.Vvvf
         public const double M_PI_3 = 1.04719755119;
         public const double M_PI_4 = 0.78539816339;
         public const double M_PI_6 = 0.52359877559;
+        public const double M_PI_12 = 0.261799387799;
         public const double M_PI_180 = 0.01745329251;
 
         public const double M_SQRT3 = 1.73205080757;

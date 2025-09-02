@@ -201,6 +201,64 @@ namespace VvvfSimulator.Vvvf
 
             return Amplitude;
         }
+        public static double GetSyncThreeAltCarrier(double x, double s)
+        {
+            if (0 <= x && x < s * M_PI_6)
+            {
+                return -6 / (s * M_PI) * x;
+            }
+            else if (s * M_PI_6 <= x && x < s * M_PI_2)
+            {
+                return 6 / (s * M_PI) * (x - s * M_PI_6) - 1;
+            }
+            else if (s * M_PI_2 <= x && x < M_PI_2)
+            {
+                return 3 / ((s - 1) * M_PI) * (x - M_PI_2) - 0.5;
+            }
+            else
+            {
+                return 0;
+            }
+        }
+        public static double GetSyncFiveAlt2Sine(double x, double a)
+        {
+            if (a >= 1) a = 0.99999;
+            else if (a < 0) a = 0;
+
+            if ((0 <= x && x < M_PI_12) || (11 * M_PI_12 < x && x < M_PI))
+            {
+                if (a <= 0.5) return a;
+                else return 1 - a;
+            }
+            else if (M_PI_12 <= x && x <= 11 * M_PI_12)
+            {
+                return a;
+            }
+            else
+            {
+                return 0;
+            }
+        }
+
+        public static double GetSyncFiveAlt2Carrier(double x)
+        {
+            if (0 <= x && x < M_PI_12)
+            {
+                return -6 / M_PI * x + 0.5;
+            }
+            else if (M_PI_12 <= x && x <= 11 * M_PI_12)
+            {
+                return Math.Abs(12 / (5 * M_PI) * (x - M_PI_2));
+            }
+            else if (11 * M_PI_12 < x && x < M_PI)
+            {
+                return 6 / M_PI * (x - M_PI) + 0.5;
+            }
+            else
+            {
+                return 0;
+            }
+        }
 
         //
         // Carrier Freq Calculation
@@ -397,12 +455,12 @@ namespace VvvfSimulator.Vvvf
                         if(PulseCount == 5)
                         {
                             // SYNC 5 ALTERNATE 1
-                            if(Alternate == PulseAlternative.Alt1)
+                            if (Alternate == PulseAlternative.Alt1)
                             {
                                 double Period = SineX % M_2PI;
                                 int Orthant = (int)(Period / M_PI_2);
                                 double Quater = Period % M_PI_2;
-                                    
+
                                 int _GetPwm(double t)
                                 {
                                     double a = M_PI_2 - Value.Amplitude;
@@ -420,6 +478,49 @@ namespace VvvfSimulator.Vvvf
                                     2 => 2 - _GetPwm(Quater),
                                     _ => 2 - _GetPwm(M_PI_2 - Quater)
                                 };
+                            }
+
+                            // SYNC 5 ALTERNATE 2
+                            else if (Alternate == PulseAlternative.Alt2)
+                            {
+                                double x = SineX % M_2PI;
+                                double SineVal = 0;
+                                double SawVal1 = 0;
+                                double SawVal2 = 0;
+                                int sectionS = (int)(x / (M_PI)) % 2;
+                                int sectionC = (int)(x / (M_PI_2)) % 4;
+
+                                if (sectionS == 0)
+                                {
+                                    SineVal = GetSyncFiveAlt2Sine(x, Amplitude);
+                                }
+                                else
+                                {
+                                    SineVal = GetSyncFiveAlt2Sine(x - M_PI, Amplitude);
+                                }
+
+                                if (sectionC == 0)
+                                {
+                                    SawVal1 = GetSyncFiveAlt2Carrier(x);
+                                    SawVal2 = 0;
+                                }
+                                else if (sectionC == 1)
+                                {
+                                    SawVal1 = GetSyncFiveAlt2Carrier(M_PI - x);
+                                    SawVal2 = 0;
+                                }
+                                else if (sectionC == 2)
+                                {
+                                    SawVal1 = 0;
+                                    SawVal2 = -GetSyncFiveAlt2Carrier(x - M_PI);
+                                }
+                                else
+                                {
+                                    SawVal1 = 0;
+                                    SawVal2 = -GetSyncFiveAlt2Carrier(M_2PI - x);
+                                }
+                                if (sectionS == 1) SineVal = -SineVal;
+                                return ModulateSignal(SineVal, SawVal1) + ModulateSignal(SineVal, SawVal2);
                             }
                         }
 
@@ -779,14 +880,48 @@ namespace VvvfSimulator.Vvvf
                     }
                 case PulseTypeName.SYNC:
                     {
-                        // SYNC 3 ALTERNATE 1
-                        if(PulseCount == 3 && PulseMode.Alternative == PulseAlternative.Alt1)
+                        if (PulseCount == 3)
                         {
-                            double SineVal = Sine(SineX);
-                            double SawVal = Saw(SineX - Value.PulseData.GetValueOrDefault(PulseDataKey.Phase, 0) / 180.0 * M_PI);
-                            double Pwm = (SineVal > 0 ? 1 : -1) * (Amplitude * 2 / 3.0 + 1 / 3.0);
-                            double Negate = SawVal > 0 ? SawVal - 1 : SawVal + 1;
-                            return ModulateSignal(Pwm, Negate) * 2;
+                            // SYNC 3 ALTERNATE 1
+                            if (PulseMode.Alternative == PulseAlternative.Alt1)
+                            {
+                                double SineVal = Sine(SineX);
+                                double SawVal = Saw(SineX - Value.PulseData.GetValueOrDefault(PulseDataKey.Phase, 0) / 180.0 * M_PI);
+                                double Pwm = (SineVal > 0 ? 1 : -1) * (Amplitude * 2 / 3.0 + 1 / 3.0);
+                                double Negate = SawVal > 0 ? SawVal - 1 : SawVal + 1;
+                                return ModulateSignal(Pwm, Negate) * 2;
+                            }
+
+                            // SYNC 3 ALTERNATE 2, 3
+                            else if (PulseMode.Alternative == PulseAlternative.Alt2 || PulseMode.Alternative == PulseAlternative.Alt3)
+                            {
+                                double SineVal = Amplitude * Math.Pow(-1, Math.Floor(M_1_PI * SineX));
+                                double m = Value.PulseData.GetValueOrDefault(PulseDataKey.PulseWidth, 0);
+                                double s = 1 - m;
+                                double x = SineX % M_2PI;
+                                double SawVal = 0;
+                                int section = (int)(x / (M_PI_2)) % 4;
+
+                                if (section == 0)
+                                {
+                                    SawVal = GetSyncThreeAltCarrier(x, s);
+                                }
+                                else if (section == 1)
+                                {
+                                    SawVal = GetSyncThreeAltCarrier(M_PI - x, s);
+                                }
+                                else if (section == 2)
+                                {
+                                    SawVal = -GetSyncThreeAltCarrier(x - M_PI, s);
+                                }
+                                else
+                                {
+                                    SawVal = -GetSyncThreeAltCarrier(M_2PI - x, s);
+                                }
+                                if (PulseMode.Alternative == PulseAlternative.Alt3) // SYNC 3 ALTERNATE 3
+                                    SawVal = -SawVal;
+                                return ModulateSignal(SineVal, SawVal) * 2;
+                            }
                         }
 
                         // SYNC 5 9 13 17 ALTERNATE 1

@@ -288,7 +288,7 @@ namespace VvvfSimulator.Vvvf
                         return PulseCount switch
                         {
                             1 => [PulseAlternative.Default, PulseAlternative.Shifted, PulseAlternative.Alt1],
-                            5 => [PulseAlternative.Default, PulseAlternative.Shifted, PulseAlternative.Alt1],
+                            5 => [PulseAlternative.Default, PulseAlternative.Shifted, PulseAlternative.Alt1, PulseAlternative.Alt2],
                             _ => [PulseAlternative.Default, PulseAlternative.Shifted],
                         };
                     }
@@ -334,7 +334,7 @@ namespace VvvfSimulator.Vvvf
                     {
                         return PulseCount switch
                         {
-                            3 => AlternativesDefaultToX(1, [PulseAlternative.Shifted, PulseAlternative.CP, PulseAlternative.Square,]),
+                            3 => AlternativesDefaultToX(3, [PulseAlternative.Shifted, PulseAlternative.CP, PulseAlternative.Square,]),
                             5 => AlternativesDefaultToX(1, [PulseAlternative.Shifted, PulseAlternative.CP, PulseAlternative.Square,]),
                             6 => AlternativesDefaultToX(1, [PulseAlternative.Shifted, PulseAlternative.CP, PulseAlternative.Square,]),
                             8 => AlternativesDefaultToX(1, [PulseAlternative.Shifted, PulseAlternative.CP, PulseAlternative.Square,]),
@@ -421,6 +421,8 @@ namespace VvvfSimulator.Vvvf
                             3 => PulseMode.Alternative switch
                             {
                                 PulseAlternative.Alt1 => [PulseDataKey.Phase],
+                                PulseAlternative.Alt2 => [PulseDataKey.PulseWidth],
+                                PulseAlternative.Alt3 => [PulseDataKey.PulseWidth],
                                 _ => [],
                             },
                             6 => PulseMode.Alternative switch
