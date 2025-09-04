@@ -450,9 +450,9 @@ namespace VvvfSimulator.Vvvf
                             5 => PulseMode.Alternative switch
                             {
                                 PulseAlternative.Alt1 => [PulseDataKey.PulseWidth],
-                                _ => [],
+                                _ => [PulseDataKey.Dipolar],
                             },
-                            _ => []
+                            _ => [PulseDataKey.Dipolar]
                         },
                         PulseTypeName.ASYNC => [PulseDataKey.Dipolar],
                         _ => []
