@@ -500,6 +500,8 @@
     <system:String x:Key="Resource.Language.FriendlyNameConverter.PulseHarmonicType.Name.Saw">Triangle</system:String>
     <system:String x:Key="Resource.Language.FriendlyNameConverter.PulseHarmonicType.Name.Square">Square</system:String>
     <system:String x:Key="Resource.Language.FriendlyNameConverter.PulseHarmonicType.Name.HFI">HFI</system:String>
+    <system:String x:Key="Resource.Language.FriendlyNameConverter.PulseHarmonicType.Name.SVM">SVM</system:String>
+    <system:String x:Key="Resource.Language.FriendlyNameConverter.PulseHarmonicType.Name.DPWM">DPWM</system:String>
 
     <system:String x:Key="Resource.Language.FriendlyNameConverter.DiscreteTimeMode.Name.Left">Left</system:String>
     <system:String x:Key="Resource.Language.FriendlyNameConverter.DiscreteTimeMode.Name.Middle">Middle</system:String>

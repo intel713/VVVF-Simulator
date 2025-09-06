@@ -500,6 +500,8 @@
     <system:String x:Key="Resource.Language.FriendlyNameConverter.PulseHarmonicType.Name.Saw">三角波</system:String>
     <system:String x:Key="Resource.Language.FriendlyNameConverter.PulseHarmonicType.Name.Square">方波</system:String>
     <system:String x:Key="Resource.Language.FriendlyNameConverter.PulseHarmonicType.Name.HFI">高频叠加</system:String>
+    <system:String x:Key="Resource.Language.FriendlyNameConverter.PulseHarmonicType.Name.SVM">SVM</system:String>
+    <system:String x:Key="Resource.Language.FriendlyNameConverter.PulseHarmonicType.Name.DPWM">DPWM</system:String>
 
     <system:String x:Key="Resource.Language.FriendlyNameConverter.DiscreteTimeMode.Name.Left">靠左</system:String>
     <system:String x:Key="Resource.Language.FriendlyNameConverter.DiscreteTimeMode.Name.Middle">居中</system:String>

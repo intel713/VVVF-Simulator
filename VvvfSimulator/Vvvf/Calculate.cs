@@ -52,16 +52,45 @@ namespace VvvfSimulator.Vvvf
                     true => harmonic.Harmonic * (x + harmonic.InitialPhase),
                     false => harmonic.Harmonic * (T + InitialPhase)
                 };
+
+                double u = Sine(x);
+                double v = Sine(x + M_2PI / 3);
+                double w = Sine(x + 2 * M_2PI / 3);
+                double Max = amplitude * Math.Max(u, Math.Max(v, w));
+                double min = amplitude * Math.Min(u, Math.Min(v, w));
+                //double Vmid = 0;
+
                 double harmonic_value = harmonic.Type switch
                 {
                     PulseHarmonic.PulseHarmonicType.Sine => Sine(harmonic_x),
                     PulseHarmonic.PulseHarmonicType.Saw => -Saw(harmonic_x),
                     PulseHarmonic.PulseHarmonicType.Square => Square(harmonic_x),
+                    // Special Harmonics
                     PulseHarmonic.PulseHarmonicType.HFI => harmonic.IsHarmonicProportional switch
                     {
-                        true => Sine(x) * Math.Pow(-1, Math.Floor(M_1_PI * (M_2PI * harmonic.Harmonic * sawtime + M_PI_3 + harmonic.InitialPhase))),
-                        false => Sine(x) * Math.Pow(-1, Math.Floor(M_1_PI * (M_2PI * harmonic.Harmonic * T + M_PI_3 + harmonic.InitialPhase)))
+                        true => Sine(x) * Math.Pow(-1, Math.Floor(M_1_PI * (M_2PI * harmonic.Harmonic * sawtime + M_PI_3 + harmonic.InitialPhase))), // Random HFI (RHFI)
+                        false => Sine(x) * Math.Pow(-1, Math.Floor(M_1_PI * (M_2PI * harmonic.Harmonic * T + M_PI_3 + harmonic.InitialPhase))), // HFI
                     },
+                    PulseHarmonic.PulseHarmonicType.SVM => -0.5 * (Max + min), // SVM
+                    PulseHarmonic.PulseHarmonicType.DPWM => harmonic.Harmonic switch
+                    {
+                        60 => Max + min >= 0 ? 1 - Max : -1 - min, // DPWM 60вк
+                        30 => Max + min >= 0 ? -1 - min : 1 - Max, // DPWM 30вк
+                        120 => 1 - Max, // DPWM 120вк (ON)
+                        -120 => -1 - min, // DPWM 120вк (OFF)
+                        _ => 0,
+                    },
+                    // I don't know how to implement these :(
+                    //PulseHarmonic.PulseHarmonicType.DPWM => u == Vmid // DPWM 60вк (+30вк)
+                    //? (w >= 0 ? 1 - w : -1 - w)
+                    //: v == Vmid
+                    //    ? (u >= 0 ? 1 - u : -1 - u)
+                    //    : (v >= 0 ? 1 - v : -1 - v),
+                    //PulseHarmonic.PulseHarmonicType.DPWM => u == Vmid // DPWM 60вк (-30вк)
+                    //? (v >= 0 ? 1 - v : -1 - v)
+                    //: v == Vmid
+                    //    ? (w >= 0 ? 1 - w : -1 - w)
+                    //    : (u >= 0 ? 1 - u : -1 - u),
                     _ => throw new NotImplementedException(),
                 };
                 BaseValue += harmonic_value * harmonic.Amplitude * (harmonic.IsAmplitudeProportional ? amplitude : 1);
@@ -432,9 +461,12 @@ namespace VvvfSimulator.Vvvf
                             SawVal = -SawVal;
 
                         double Dipolar = PulseData.GetValueOrDefault(PulseDataKey.Dipolar, -1);
-                        double DipolarBias = (Dipolar != -1 ? Dipolar : 0);
+                        if (Dipolar == -1) Dipolar = 0;
 
-                        return ModulateSignal(SineVal, 0.5 * (SawVal + 1 - DipolarBias)) + ModulateSignal(SineVal, 0.5 * (SawVal - 1 + DipolarBias));
+                        // I have no idea which one is better :(
+                        //return ModulateSignal(SineVal, 0.5 * (1 + Dipolar) * (SawVal - 1) + 1) + ModulateSignal(SineVal, 0.5 * (1 + Dipolar) * (SawVal + 1) - 1); // Linear Proportional Dipolar
+                        //return ModulateSignal(SineVal, (1 / (2 - Dipolar)) * (SawVal - 1) + 1) + ModulateSignal(SineVal, (1 / (2 - Dipolar)) * (SawVal + 1) - 1); // Inverse Proportional Dipolar
+                        return ModulateSignal(SineVal, 0.5 * (SawVal + 1 - Dipolar)) + ModulateSignal(SineVal, 0.5 * (SawVal - 1 + Dipolar));
                     }
                 case PulseTypeName.SYNC:
                     {

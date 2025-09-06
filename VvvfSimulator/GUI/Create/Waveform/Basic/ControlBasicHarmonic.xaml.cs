@@ -25,7 +25,7 @@ namespace VvvfSimulator.GUI.Create.Waveform.Basic
         //Harmonic Presets
         public enum PresetHarmonics
         {
-            THI, SVM, HFI, DPM1, DPM2, DPM3, DPM4, SquareFourier
+            THI, SVM, HFI, DPWM60, DPWM30, DPWM120ON, DPWM120OFF, SquareFourier
         }
 
         public static List<PulseHarmonic> GetPresetHarmonics(PresetHarmonics harmonic)
@@ -34,35 +34,31 @@ namespace VvvfSimulator.GUI.Create.Waveform.Basic
             {
                 case PresetHarmonics.THI:
                     return [ 
-                        new() { Amplitude = 0.2, Harmonic = 3 } 
+                        new() { Amplitude = 0.1666666667, Harmonic = 3 }
                     ];
                 case PresetHarmonics.SVM:
                     return [ 
-                        new() { Amplitude = 0.25, Harmonic = 3 , Type = PulseHarmonic.PulseHarmonicType.Saw} 
+                        new() { Amplitude = 1, Harmonic = 1 , Type = PulseHarmonic.PulseHarmonicType.SVM, IsAmplitudeProportional=false, IsHarmonicProportional = false} 
                     ];
                 case PresetHarmonics.HFI:
                     return [
                         new () { Amplitude = 0.25, Harmonic = 250, Type = PulseHarmonic.PulseHarmonicType.HFI, IsAmplitudeProportional=false, IsHarmonicProportional = false}
                     ];
-                case PresetHarmonics.DPM1:
+                case PresetHarmonics.DPWM60:
                     return [
-                        new () { Amplitude = -0.05, Harmonic = 3 },
-                        new () { Amplitude = 0.2, Harmonic = 3, Type = PulseHarmonic.PulseHarmonicType.Square }
+                        new () { Amplitude = 1, Harmonic = 60, Type = PulseHarmonic.PulseHarmonicType.DPWM, IsAmplitudeProportional=false, IsHarmonicProportional = false}
                     ];
-                case PresetHarmonics.DPM2:
+                case PresetHarmonics.DPWM30:
                     return [
-                        new () { Amplitude = -0.05, Harmonic = 3, InitialPhase = 1.57079633, Type = PulseHarmonic.PulseHarmonicType.Saw},
-                        new () { Amplitude = 0.2, Harmonic = 3, Type = PulseHarmonic.PulseHarmonicType.Square }
+                        new () { Amplitude = 1, Harmonic = 30, Type = PulseHarmonic.PulseHarmonicType.DPWM, IsAmplitudeProportional=false, IsHarmonicProportional = false}
                     ];
-                case PresetHarmonics.DPM3:
+                case PresetHarmonics.DPWM120ON:
                     return [
-                        new () { Amplitude = -0.05, Harmonic = 3, InitialPhase = -1.57079633, Type = PulseHarmonic.PulseHarmonicType.Saw},
-                        new () { Amplitude = 0.2, Harmonic = 3, Type = PulseHarmonic.PulseHarmonicType.Square }
+                        new () {Amplitude = 1, Harmonic = 120, Type = PulseHarmonic.PulseHarmonicType.DPWM, IsAmplitudeProportional = false, IsHarmonicProportional = false}
                     ];
-                case PresetHarmonics.DPM4:
+                case PresetHarmonics.DPWM120OFF:
                     return [
-                        new () { Amplitude = 0.05, Harmonic = 3, Type = PulseHarmonic.PulseHarmonicType.Saw},
-                        new () { Amplitude = 0.2, Harmonic = 3, Type = PulseHarmonic.PulseHarmonicType.Square }
+                        new () { Amplitude = 1, Harmonic = -120, Type = PulseHarmonic.PulseHarmonicType.DPWM, IsAmplitudeProportional=false, IsHarmonicProportional = false}
                     ];
                 default:
                     List<PulseHarmonic> harmonics = [];
