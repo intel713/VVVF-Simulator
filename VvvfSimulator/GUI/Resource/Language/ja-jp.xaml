@@ -29,6 +29,8 @@
     <system:String x:Key="Resource.Language.FriendlyNameConverter.ColorTheme.Name.Dark">黒</system:String>
 
     <system:String x:Key="MainWindow.Title">可変電圧可変周波数制御再現機</system:String>
+    <system:String x:Key="MainWindow.File.SaveBeforeCloseFile.Title">確認</system:String>
+    <system:String x:Key="MainWindow.File.SaveBeforeCloseFile.Message">現在のファイルは保存されていません。保存しますか？</system:String>
     
     <system:String x:Key="MainWindow.Menu.File">ファイル</system:String>
     <system:String x:Key="MainWindow.Menu.File.Save">保存</system:String>
@@ -336,6 +338,9 @@
     <system:String x:Key="Mascon.ControlEditor.Message.File.Save.Ok.Title">いいね</system:String>
     <system:String x:Key="Mascon.ControlEditor.Message.File.Save.Ok.Message">保存しました</system:String>
     <system:String x:Key="Mascon.ControlEditor.Message.File.Save.Error.Message">保存できませんでした</system:String>
+
+    <system:String x:Key="Mascon.ControlEditor.Message.Edit.Reset.Confirm.Title">確認</system:String>
+    <system:String x:Key="Mascon.ControlEditor.Message.Edit.Reset.Confirm.Message">本当に白紙に戻しますか？</system:String>
 
     <system:String x:Key="Create.Settings.Jerk.Jerk">ジャーク設定</system:String>
     <system:String x:Key="Create.Settings.Jerk.On">通電時</system:String>

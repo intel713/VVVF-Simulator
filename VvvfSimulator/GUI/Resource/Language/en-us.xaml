@@ -29,6 +29,8 @@
     <system:String x:Key="Resource.Language.FriendlyNameConverter.ColorTheme.Name.Dark">Dark</system:String>
     
     <system:String x:Key="MainWindow.Title">VVVF Simulator</system:String>
+    <system:String x:Key="MainWindow.File.SaveBeforeCloseFile.Title">Confirmation</system:String>
+    <system:String x:Key="MainWindow.File.SaveBeforeCloseFile.Message">The file has not been saved. Do you want to save it?</system:String>
 
     <system:String x:Key="MainWindow.Menu.File">File</system:String>
     <system:String x:Key="MainWindow.Menu.File.Save">Save</system:String>
@@ -336,6 +338,9 @@
     <system:String x:Key="Mascon.ControlEditor.Message.File.Save.Ok.Title">Great</system:String>
     <system:String x:Key="Mascon.ControlEditor.Message.File.Save.Ok.Message">Saved</system:String>
     <system:String x:Key="Mascon.ControlEditor.Message.File.Save.Error.Message">Failed to save</system:String>
+
+    <system:String x:Key="Mascon.ControlEditor.Message.Edit.Reset.Confirm.Title">Confirmation</system:String>
+    <system:String x:Key="Mascon.ControlEditor.Message.Edit.Reset.Confirm.Message">Are you sure?</system:String>
 
     <system:String x:Key="Create.Settings.Jerk.Jerk">Jerk Setting</system:String>
     <system:String x:Key="Create.Settings.Jerk.On">Power On</system:String>

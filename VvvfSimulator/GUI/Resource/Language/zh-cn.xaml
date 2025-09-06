@@ -29,6 +29,8 @@
     <system:String x:Key="Resource.Language.FriendlyNameConverter.ColorTheme.Name.Dark">深色</system:String>
     
     <system:String x:Key="MainWindow.Title">VVVF Simulator</system:String><!--不用翻译-->
+    <system:String x:Key="MainWindow.File.SaveBeforeCloseFile.Title">确认</system:String>
+    <system:String x:Key="MainWindow.File.SaveBeforeCloseFile.Message">当前文件尚未保存。是否保存？</system:String>
 
     <system:String x:Key="MainWindow.Menu.File">文件</system:String>
     <system:String x:Key="MainWindow.Menu.File.Save">保存</system:String>
@@ -336,6 +338,9 @@
     <system:String x:Key="Mascon.ControlEditor.Message.File.Save.Ok.Title">信息</system:String>
     <system:String x:Key="Mascon.ControlEditor.Message.File.Save.Ok.Message">保存成功</system:String>
     <system:String x:Key="Mascon.ControlEditor.Message.File.Save.Error.Message">保存失败</system:String>
+
+    <system:String x:Key="Mascon.ControlEditor.Message.Edit.Reset.Confirm.Title">确认</system:String>
+    <system:String x:Key="Mascon.ControlEditor.Message.Edit.Reset.Confirm.Message">您确定要重置吗？</system:String>
 
     <system:String x:Key="Create.Settings.Jerk.Jerk">通断电设置</system:String>
     <system:String x:Key="Create.Settings.Jerk.On">通电</system:String>

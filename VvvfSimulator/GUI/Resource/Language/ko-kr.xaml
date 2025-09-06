@@ -29,6 +29,8 @@
     <system:String x:Key="Resource.Language.FriendlyNameConverter.ColorTheme.Name.Dark">다크</system:String>
     
     <system:String x:Key="MainWindow.Title">VVVF 시뮬레이터</system:String>
+    <system:String x:Key="MainWindow.File.SaveBeforeCloseFile.Title">확인</system:String>
+    <system:String x:Key="MainWindow.File.SaveBeforeCloseFile.Message">현재 파일이 저장되지 않았습니다. 저장하시겠습니까?</system:String>
 
     <system:String x:Key="MainWindow.Menu.File">파일</system:String>
     <system:String x:Key="MainWindow.Menu.File.Save">저장</system:String>
@@ -301,8 +303,8 @@
     <system:String x:Key="MidiConvert.Main.Config">설정</system:String>
     <system:String x:Key="MidiConvert.Main.Convert">변환하기</system:String>
 
-    <system:String x:Key="MidiConvert.Main.Message.MidiConvertError">이 미디는 변환할 수 없습니다.</system:String>
-    <system:String x:Key="MidiConvert.TaskDescription.Convert.Description">미디:{0}, 트랙{1}, 파트{2}의 변환</system:String>
+    <system:String x:Key="MidiConvert.Main.Message.MidiConvertError">이 MIDI 파일은 변환할 수 없습니다.</system:String>
+    <system:String x:Key="MidiConvert.TaskDescription.Convert.Description">MIDI:{0}, 트랙{1}, 파트{2}의 변환</system:String>
 
     <system:String x:Key="MidiConvert.Config.Title">MIDI 변환</system:String>
     <system:String x:Key="MidiConvert.Config.MultiThreading">병렬 처리</system:String>
@@ -328,7 +330,7 @@
     <system:String x:Key="Mascon.ControlEditor.Menu.Edit.Reset">초기화</system:String>
     <system:String x:Key="Mascon.ControlEditor.Menu.Edit.Midi">MIDI 열기</system:String>
 
-    <system:String x:Key="Mascon.ControlEditor.Message.MidiConvertError">이 미디는 변환할 수 없습니다.</system:String>
+    <system:String x:Key="Mascon.ControlEditor.Message.MidiConvertError">이 MIDI 파일은 변환할 수 없습니다.</system:String>
 
     <system:String x:Key="Mascon.ControlEditor.Message.File.Load.Ok.Title">성공</system:String>
     <system:String x:Key="Mascon.ControlEditor.Message.File.Load.Ok.Message">파일을 불러왔습니다</system:String>
@@ -337,6 +339,9 @@
     <system:String x:Key="Mascon.ControlEditor.Message.File.Save.Ok.Message">파일을 저장했습니다</system:String>
     <system:String x:Key="Mascon.ControlEditor.Message.File.Save.Error.Message">파일을 저장하지 못했습니다</system:String>
 
+    <system:String x:Key="Mascon.ControlEditor.Message.Edit.Reset.Confirm.Title">확인</system:String>
+    <system:String x:Key="Mascon.ControlEditor.Message.Edit.Reset.Confirm.Message">정말로 초기화 하시겠습니까?</system:String>
+    
     <system:String x:Key="Create.Settings.Jerk.Jerk">타행 설정</system:String>
     <system:String x:Key="Create.Settings.Jerk.On">타행 종료</system:String>
     <system:String x:Key="Create.Settings.Jerk.Off">타행 진입</system:String>
