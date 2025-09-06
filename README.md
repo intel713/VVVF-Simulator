@@ -2,7 +2,7 @@
 This fork currently supports experimental features like
 - Random Switching Modulation (To enable this, enter any negative value in the `Range` section)
 - HFI and Random HFI (To use Random HFI, check the `Harmonic Professional` box in the `Harmonic Settings` menu)
-- Improved three-level Dipolar Bias (0 - 1 : 3-Level - 2-Level)
+- Improved SVM and DPWMs
 - New pulse modes:
   - 2-Level
     - Shifted Center Pulses (Only available with 4N+3 pulses)
@@ -163,6 +163,7 @@ I highly suggest looking at the sample VVVF files as messing with those will mak
  - Simplified Chinese
     - [02001](https://github.com/Jerethon)
     - [YAJ-54S12G-1](https://github.com/YJ-305-A2)
+
 
 
 
