@@ -12,10 +12,11 @@ This fork currently supports experimental features like
 
 And the following features are planned
 - Make options for selecting Random and Random SW
-- Make conform window before resetting pattern, closing the program, or opening other files
 - Improve RHFI
+- Only prompt to save when the YAML file has been modified
 - ✅ ~~Only enable Shifted CP option with 4N+3 pulses~~
 - ✅ ~~Removal of phase modification for square N pulses~~
+- ✅ ~~Make conform window before resetting pattern, closing the program, or opening other files~~
 
 Some features may be unstable.
 
@@ -163,6 +164,7 @@ I highly suggest looking at the sample VVVF files as messing with those will mak
  - Simplified Chinese
     - [02001](https://github.com/Jerethon)
     - [YAJ-54S12G-1](https://github.com/YJ-305-A2)
+
 
 
 
