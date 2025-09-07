@@ -261,6 +261,29 @@ namespace VvvfSimulator
         {
             return Path.GetFileNameWithoutExtension(LoadPath);
         }
+        
+        private void SaveYaml()
+        {
+            String save_path = LoadPath;
+            if (save_path.Length == 0)
+            {
+                var dialog = new SaveFileDialog
+                {
+                    Filter = "Yaml (*.yaml)|*.yaml",
+                    FileName = "VVVF"
+                };
+
+                // ダイアログを表示する
+                if (dialog.ShowDialog() == false) return;
+                LoadPath = dialog.FileName;
+                save_path = LoadPath;
+            }
+            if (YamlVvvfManage.Save(save_path))
+                MessageBox.Show(LanguageManager.GetString("MainWindow.Message.File.Save.Ok.Message"), LanguageManager.GetString("MainWindow.Message.File.Save.Ok.Title"), MessageBoxButton.OK, MessageBoxImage.Information);
+            else
+                MessageBox.Show(LanguageManager.GetString("MainWindow.Message.File.Save.Error.Message"), LanguageManager.GetString("Generic.Title.Error"), MessageBoxButton.OK, MessageBoxImage.Error);
+        }
+        
         public void LoadYaml(string path)
         {
             YamlVvvfSoundData Current = YamlVvvfManage.CurrentData;
@@ -306,24 +329,7 @@ namespace VvvfSimulator
                 {
                     if (save == MessageBoxResult.Yes)
                     {
-                        String save_path = LoadPath;
-                        if (save_path.Length == 0)
-                        {
-                            var dialog_save = new SaveFileDialog
-                            {
-                                Filter = "Yaml (*.yaml)|*.yaml",
-                                FileName = "VVVF"
-                            };
-
-                            // ダイアログを表示する
-                            if (dialog_save.ShowDialog() == false) return;
-                            LoadPath = dialog_save.FileName;
-                            save_path = LoadPath;
-                        }
-                        if (YamlVvvfManage.Save(save_path))
-                            MessageBox.Show(LanguageManager.GetString("MainWindow.Message.File.Save.Ok.Message"), LanguageManager.GetString("MainWindow.Message.File.Save.Ok.Title"), MessageBoxButton.OK, MessageBoxImage.Information);
-                        else
-                            MessageBox.Show(LanguageManager.GetString("MainWindow.Message.File.Save.Error.Message"), LanguageManager.GetString("Generic.Title.Error"), MessageBoxButton.OK, MessageBoxImage.Error);
+                        SaveYaml();
                     }
 
                     var dialog = new OpenFileDialog
@@ -353,24 +359,7 @@ namespace VvvfSimulator
             }
             else if (tag.Equals("Save"))
             {
-                String save_path = LoadPath;
-                if (save_path.Length == 0)
-                {
-                    var dialog = new SaveFileDialog
-                    {
-                        Filter = "Yaml (*.yaml)|*.yaml",
-                        FileName = "VVVF"
-                    };
-
-                    // ダイアログを表示する
-                    if (dialog.ShowDialog() == false) return;
-                    LoadPath = dialog.FileName;
-                    save_path = LoadPath;
-                }
-                if (YamlVvvfManage.Save(save_path))
-                    MessageBox.Show(LanguageManager.GetString("MainWindow.Message.File.Save.Ok.Message"), LanguageManager.GetString("MainWindow.Message.File.Save.Ok.Title"), MessageBoxButton.OK, MessageBoxImage.Information);
-                else
-                    MessageBox.Show(LanguageManager.GetString("MainWindow.Message.File.Save.Error.Message"), LanguageManager.GetString("Generic.Title.Error"), MessageBoxButton.OK, MessageBoxImage.Error);
+                SaveYaml();
             }
         }
         

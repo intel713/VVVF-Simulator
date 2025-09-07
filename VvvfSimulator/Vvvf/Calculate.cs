@@ -80,7 +80,7 @@ namespace VvvfSimulator.Vvvf
                         -120 => -1 - min, // DPWM 120вк (OFF)
                         _ => 0,
                     },
-                    // I don't know how to implement these :(
+                    // I'm not sure if this implementation is correct :(
                     //PulseHarmonic.PulseHarmonicType.DPWM => u == Vmid // DPWM 60вк (+30вк)
                     //? (w >= 0 ? 1 - w : -1 - w)
                     //: v == Vmid
@@ -229,64 +229,6 @@ namespace VvvfSimulator.Vvvf
             if (Param.MaxAmplitude != -1 && Param.MaxAmplitude < Amplitude) Amplitude = Param.MaxAmplitude;
 
             return Amplitude;
-        }
-        public static double GetSyncThreeAltCarrier(double x, double s)
-        {
-            if (0 <= x && x < s * M_PI_6)
-            {
-                return -6 / (s * M_PI) * x;
-            }
-            else if (s * M_PI_6 <= x && x < s * M_PI_2)
-            {
-                return 6 / (s * M_PI) * (x - s * M_PI_6) - 1;
-            }
-            else if (s * M_PI_2 <= x && x < M_PI_2)
-            {
-                return 3 / ((s - 1) * M_PI) * (x - M_PI_2) - 0.5;
-            }
-            else
-            {
-                return 0;
-            }
-        }
-        public static double GetSyncFiveAlt2Sine(double x, double a)
-        {
-            if (a >= 1) a = 0.99999; // THIS NEEDS TO BE FIXED
-            else if (a < 0) a = 0;
-
-            if ((0 <= x && x < M_PI_12) || (11 * M_PI_12 < x && x < M_PI))
-            {
-                if (a <= 0.5) return a;
-                else return 1 - a;
-            }
-            else if (M_PI_12 <= x && x <= 11 * M_PI_12)
-            {
-                return a;
-            }
-            else
-            {
-                return 0;
-            }
-        }
-
-        public static double GetSyncFiveAlt2Carrier(double x)
-        {
-            if (0 <= x && x < M_PI_12)
-            {
-                return -6 / M_PI * x + 0.5;
-            }
-            else if (M_PI_12 <= x && x <= 11 * M_PI_12)
-            {
-                return Math.Abs(12 / (5 * M_PI) * (x - M_PI_2));
-            }
-            else if (11 * M_PI_12 < x && x < M_PI)
-            {
-                return 6 / M_PI * (x - M_PI) + 0.5;
-            }
-            else
-            {
-                return 0;
-            }
         }
 
         //
@@ -516,43 +458,22 @@ namespace VvvfSimulator.Vvvf
                             else if (Alternate == PulseAlternative.Alt2)
                             {
                                 double x = SineX % M_2PI;
-                                double SineVal = 0;
-                                double SawVal1 = 0;
-                                double SawVal2 = 0;
-                                int sectionS = (int)(x / (M_PI)) % 2;
-                                int sectionC = (int)(x / (M_PI_2)) % 4;
+                                int Orthant = (int)(x / (M_PI_2)) % 4;
 
-                                if (sectionS == 0)
+                                int _GetPwm(double t, double a)
                                 {
-                                    SineVal = GetSyncFiveAlt2Sine(x, Amplitude);
-                                }
-                                else
-                                {
-                                    SineVal = GetSyncFiveAlt2Sine(x - M_PI, Amplitude);
+                                    if (M_PI_6 * Math.Abs(a - 0.5) <= t && t < M_PI_12) return 1;
+                                    else if (M_PI_2 - 5 * M_PI_12 * a <= t && t < M_PI_2) return 1;
+                                    else return 0;
                                 }
 
-                                if (sectionC == 0)
+                                return 1 + Orthant switch
                                 {
-                                    SawVal1 = GetSyncFiveAlt2Carrier(x);
-                                    SawVal2 = 0;
-                                }
-                                else if (sectionC == 1)
-                                {
-                                    SawVal1 = GetSyncFiveAlt2Carrier(M_PI - x);
-                                    SawVal2 = 0;
-                                }
-                                else if (sectionC == 2)
-                                {
-                                    SawVal1 = 0;
-                                    SawVal2 = -GetSyncFiveAlt2Carrier(x - M_PI);
-                                }
-                                else
-                                {
-                                    SawVal1 = 0;
-                                    SawVal2 = -GetSyncFiveAlt2Carrier(M_2PI - x);
-                                }
-                                if (sectionS == 1) SineVal = -SineVal;
-                                return ModulateSignal(SineVal, SawVal1) + ModulateSignal(SineVal, SawVal2);
+                                    0 => _GetPwm(x, Value.Amplitude),
+                                    1 => _GetPwm(M_PI - x, Value.Amplitude),
+                                    2 => -_GetPwm(x - M_PI, Value.Amplitude),
+                                    _ => -_GetPwm(M_2PI - x, Value.Amplitude)
+                                };
                             }
                         }
 
@@ -932,24 +853,36 @@ namespace VvvfSimulator.Vvvf
                                 double s = 1 - m;
                                 double x = SineX % M_2PI;
                                 double SawVal = 0;
-                                int section = (int)(x / (M_PI_2)) % 4;
+                                int Orthant = (int)(x / (M_PI_2)) % 4;
 
-                                if (section == 0)
+                                double _GetCarrier(double x, double s)
                                 {
-                                    SawVal = GetSyncThreeAltCarrier(x, s);
+                                    if (0 <= x && x < s * M_PI_6)
+                                    {
+                                        return -6 / (s * M_PI) * x;
+                                    }
+                                    else if (s * M_PI_6 <= x && x < s * M_PI_2)
+                                    {
+                                        return 6 / (s * M_PI) * (x - s * M_PI_6) - 1;
+                                    }
+                                    else if (s * M_PI_2 <= x && x < M_PI_2)
+                                    {
+                                        return 3 / ((s - 1) * M_PI) * (x - M_PI_2) - 0.5;
+                                    }
+                                    else
+                                    {
+                                        return 0;
+                                    }
                                 }
-                                else if (section == 1)
+
+                                SawVal = Orthant switch
                                 {
-                                    SawVal = GetSyncThreeAltCarrier(M_PI - x, s);
-                                }
-                                else if (section == 2)
-                                {
-                                    SawVal = -GetSyncThreeAltCarrier(x - M_PI, s);
-                                }
-                                else
-                                {
-                                    SawVal = -GetSyncThreeAltCarrier(M_2PI - x, s);
-                                }
+                                    0 => SawVal = _GetCarrier(x, s),
+                                    1 => _GetCarrier(M_PI - x, s),
+                                    2 => -_GetCarrier(x - M_PI, s),
+                                    _ => -_GetCarrier(M_2PI - x, s)
+                                };
+
                                 if (PulseMode.Alternative == PulseAlternative.Alt3) // SYNC 3 ALTERNATE 3
                                     SawVal = -SawVal;
                                 return ModulateSignal(SineVal, SawVal) * 2;
