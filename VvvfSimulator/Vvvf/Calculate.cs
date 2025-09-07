@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Windows.Media.Animation;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 using static VvvfSimulator.Vvvf.MyMath;
 using static VvvfSimulator.Vvvf.MyMath.Functions;
 using static VvvfSimulator.Vvvf.Struct;
@@ -50,7 +51,7 @@ namespace VvvfSimulator.Vvvf
                 double harmonic_x = harmonic.IsHarmonicProportional switch
                 {
                     true => harmonic.Harmonic * (x + harmonic.InitialPhase),
-                    false => harmonic.Harmonic * (T + InitialPhase)
+                    false => M_2PI * harmonic.Harmonic * (T + InitialPhase)
                 };
 
                 double u = Sine(x);
@@ -74,23 +75,26 @@ namespace VvvfSimulator.Vvvf
                     PulseHarmonic.PulseHarmonicType.SVM => -0.5 * (Max + min), // SVM
                     PulseHarmonic.PulseHarmonicType.DPWM => harmonic.Harmonic switch
                     {
+                        //60 => harmonic.InitialPhase switch // Work In Progress
+                        //{
+                        //    30 => u == Vmid // DPWM 60вк (+30вк) // I'm not sure if this implementation is correct :(
+                        //        ? (w >= 0 ? 1 - w : -1 - w)
+                        //        : v == Vmid
+                        //            ? (u >= 0 ? 1 - u : -1 - u)
+                        //            : (v >= 0 ? 1 - v : -1 - v),
+                        //    -30 => u == Vmid // DPWM 60вк (-30вк) // And this too :(
+                        //        ? (v >= 0 ? 1 - v : -1 - v)
+                        //        : v == Vmid
+                        //            ? (w >= 0 ? 1 - w : -1 - w)
+                        //            : (u >= 0 ? 1 - u : -1 - u),
+                        //    _ => Max + min >= 0 ? 1 - Max : -1 - min, // DPWM 60вк // But this should be fine :)
+                        //},
                         60 => Max + min >= 0 ? 1 - Max : -1 - min, // DPWM 60вк
                         30 => Max + min >= 0 ? -1 - min : 1 - Max, // DPWM 30вк
                         120 => 1 - Max, // DPWM 120вк (ON)
                         -120 => -1 - min, // DPWM 120вк (OFF)
                         _ => 0,
                     },
-                    // I'm not sure if this implementation is correct :(
-                    //PulseHarmonic.PulseHarmonicType.DPWM => u == Vmid // DPWM 60вк (+30вк)
-                    //? (w >= 0 ? 1 - w : -1 - w)
-                    //: v == Vmid
-                    //    ? (u >= 0 ? 1 - u : -1 - u)
-                    //    : (v >= 0 ? 1 - v : -1 - v),
-                    //PulseHarmonic.PulseHarmonicType.DPWM => u == Vmid // DPWM 60вк (-30вк)
-                    //? (v >= 0 ? 1 - v : -1 - v)
-                    //: v == Vmid
-                    //    ? (w >= 0 ? 1 - w : -1 - w)
-                    //    : (u >= 0 ? 1 - u : -1 - u),
                     _ => throw new NotImplementedException(),
                 };
                 BaseValue += harmonic_value * harmonic.Amplitude * (harmonic.IsAmplitudeProportional ? amplitude : 1);
