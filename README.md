@@ -1,7 +1,7 @@
-# This is a fork of the [VVVF-Simulator](https://github.com/VvvfGeeks/VVVF-Simulator).
+# This is a fork of the [VVVF-Simulator](https://github.com/VvvfGeeks/VVVF-Simulator)
 This fork currently supports experimental features like
 - Random Switching Modulation (To use this, enter any negative value in the `Range` section)
-- HFI and Random HFI (To use Random HFI, enable the `Harmonic Professional` checkbox in the `Harmonic Settings` window)
+- HFI and Random HFI (To use Random HFI, enable the `Harmonic Proportional` checkbox in the `Harmonic Settings` window)
 - Improved SVM and DPWMs
 - New pulse modes:
   - 2-Level
