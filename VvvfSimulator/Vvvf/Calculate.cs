@@ -77,22 +77,22 @@ namespace VvvfSimulator.Vvvf
                     {
                         //60 => harmonic.InitialPhase switch // Work In Progress
                         //{
-                        //    30 => u == Vmid // DPWM 60˚ (+30˚) // I'm not sure if this implementation is correct :(
+                        //    30 => u == Vmid // DPWM 60째 (+30째) // I'm not sure if this implementation is correct :(
                         //        ? (w >= 0 ? 1 - w : -1 - w)
                         //        : v == Vmid
                         //            ? (u >= 0 ? 1 - u : -1 - u)
                         //            : (v >= 0 ? 1 - v : -1 - v),
-                        //    -30 => u == Vmid // DPWM 60˚ (-30˚) // And this too :(
+                        //    -30 => u == Vmid // DPWM 60째 (-30째) // And this too :(
                         //        ? (v >= 0 ? 1 - v : -1 - v)
                         //        : v == Vmid
                         //            ? (w >= 0 ? 1 - w : -1 - w)
                         //            : (u >= 0 ? 1 - u : -1 - u),
-                        //    _ => Max + min >= 0 ? 1 - Max : -1 - min, // DPWM 60˚ // But this should be fine :)
+                        //    _ => Max + min >= 0 ? 1 - Max : -1 - min, // DPWM 60째 // But this should be fine :)
                         //},
-                        60 => Max + min >= 0 ? 1 - Max : -1 - min, // DPWM 60˚
-                        30 => Max + min >= 0 ? -1 - min : 1 - Max, // DPWM 30˚
-                        120 => 1 - Max, // DPWM 120˚ (ON)
-                        -120 => -1 - min, // DPWM 120˚ (OFF)
+                        60 => Max + min >= 0 ? 1 - Max : -1 - min, // DPWM 60째
+                        30 => Max + min >= 0 ? -1 - min : 1 - Max, // DPWM 30째
+                        120 => 1 - Max, // DPWM 120째 (ON)
+                        -120 => -1 - min, // DPWM 120째 (OFF)
                         _ => 0,
                     },
                     _ => throw new NotImplementedException(),
