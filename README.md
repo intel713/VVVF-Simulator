@@ -3,6 +3,7 @@ This fork currently supports experimental features like
 - Random Switching Modulation (To use this, enter any negative value in the `Range` section)
 - HFI and Random HFI (To use Random HFI, enable the `Harmonic Proportional` checkbox in the `Harmonic Settings` window)
 - Improved SVM and DPWMs
+- Improved Async for enabling a smooth transition between Async and Sync
 - New pulse modes:
   - 2-Level
     - Shifted Center Pulses (Only available with 4N+3 pulses)

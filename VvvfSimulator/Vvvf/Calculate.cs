@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Printing;
 using System.Windows.Media.Animation;
 using static System.Runtime.InteropServices.JavaScript.JSType;
 using static VvvfSimulator.Vvvf.MyMath;
@@ -401,7 +402,7 @@ namespace VvvfSimulator.Vvvf
                         Control.SetSawTime(SawTime);
 
                         double SineVal = GetBaseWaveform(PulseMode.Clone(), SineX, Amplitude, Control.GetGenerationCurrentTime(), InitialPhase, SawTime);
-                        double SawVal = Saw(Control.GetSawTime() * Control.GetSawAngleFrequency());
+                        double SawVal = Saw(Control.GetSawTime() * Control.GetSawAngleFrequency() + M_PI_2);
                         
                         if (PulseMode.Alternative == PulseAlternative.Shifted)
                             SawVal = -SawVal;
@@ -825,7 +826,7 @@ namespace VvvfSimulator.Vvvf
                         SawAngleFrequency = desire_saw_angle_freq;
                         
                         double SineVal = GetBaseWaveform(PulseMode.Clone(), SineX, Amplitude, Control.GetGenerationCurrentTime(), InitialPhase, SawTime);
-                        double SawVal = Saw(SawTime * SawAngleFrequency);
+                        double SawVal = Saw(SawTime * SawAngleFrequency + M_PI_2);
 
                         if (PulseMode.Alternative == PulseAlternative.Shifted)
                             SawVal = -SawVal;
