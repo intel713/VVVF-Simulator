@@ -423,7 +423,7 @@ namespace VvvfSimulator.Vvvf
                                 PulseAlternative.Alt1 => [PulseDataKey.Phase],
                                 PulseAlternative.Alt2 => [PulseDataKey.PulseWidth],
                                 PulseAlternative.Alt3 => [PulseDataKey.PulseWidth],
-                                _ => [],
+                                _ => [PulseDataKey.PulseWidth],
                             },
                             6 => PulseMode.Alternative switch
                             {
@@ -435,9 +435,9 @@ namespace VvvfSimulator.Vvvf
                                 PulseAlternative.Alt1 => [PulseDataKey.PulseWidth],
                                 _ => [],
                             },
-                            _ => []
+                            _ => [PulseDataKey.CarrierFolding]
                         },
-                        _ => []
+                        _ => [PulseDataKey.CarrierFolding]
                     };
                 }
 
@@ -467,7 +467,8 @@ namespace VvvfSimulator.Vvvf
                 {
                     PulseDataKey.Dipolar => -1,
                     PulseDataKey.Phase => 0,
-                    PulseDataKey.PulseWidth => 0.2,
+                    PulseDataKey.PulseWidth => 1,
+                    PulseDataKey.CarrierFolding => 1,
                     _ => 0,
                 };
             }

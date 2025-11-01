@@ -834,6 +834,7 @@ namespace VvvfSimulator.Vvvf
                         Control.SetSawAngleFrequency(SawAngleFrequency);
                         Control.SetSawTime(SawTime);
 
+                        SawVal = Saw(M_PI_2 * Value.PulseData.GetValueOrDefault(PulseDataKey.CarrierFolding, 0) * SawVal);
                         return ModulateSignal(SineVal, SawVal) * 2;
                     }
                 case PulseTypeName.SYNC:
@@ -977,6 +978,7 @@ namespace VvvfSimulator.Vvvf
                             double SawVal = -Saw(SineX);
                             //if (PulseMode.Shift)
                             //    SawVal = -SawVal;
+                            SawVal = -Saw(M_PI_2 * Value.PulseData.GetValueOrDefault(PulseDataKey.CarrierFolding, 0) * SawVal);
                             return ModulateSignal(SawVal > 0 ? Amplitude : -Amplitude, CarrierVal) * 2;
                         }
 
@@ -988,6 +990,7 @@ namespace VvvfSimulator.Vvvf
                                 SawVal = -SawVal;
                             Control.SetSawAngleFrequency(SineAngleFrequency * PulseMode.PulseCount);
                             Control.SetSawTime(SineTime);
+                            SawVal = -Saw(M_PI_2 * Value.PulseData.GetValueOrDefault(PulseDataKey.CarrierFolding, 0) * SawVal);
                             return ModulateSignal(SineVal, SawVal) * 2;
                         }
                     }
