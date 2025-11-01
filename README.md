@@ -2,6 +2,7 @@
 This fork currently supports experimental features like
 - Random Switching Modulation (To use this, enter any negative value in the `Range` section)
 - HFI and Random HFI (To use Random HFI, enable the `Harmonic Proportional` checkbox in the `Harmonic Settings` window)
+- Carrier Folding
 - Improved SVM and DPWMs
 - Improved Async for enabling a smooth transition between Async and Sync
 - New pulse modes:
