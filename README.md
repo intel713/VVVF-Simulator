@@ -22,8 +22,6 @@ And the following features are planned
 
 Some features may be unstable.
 
-[Sample YAML file for this fork](https://drive.google.com/file/d/1lw2cEoexTEOQO8Lz4UkATEwgn2ap8KZS/view?usp=sharing)
-
 # Language
 - English (Current language)
 - [日本語](README_JPN.md)

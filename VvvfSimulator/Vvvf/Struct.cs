@@ -1,4 +1,4 @@
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using static VvvfSimulator.Yaml.VvvfSound.YamlVvvfSoundData.YamlControlData;
 using static VvvfSimulator.Yaml.VvvfSound.YamlVvvfSoundData.YamlControlData.YamlPulseMode;
 
@@ -423,17 +423,17 @@ namespace VvvfSimulator.Vvvf
                                 PulseAlternative.Alt1 => [PulseDataKey.Phase],
                                 PulseAlternative.Alt2 => [PulseDataKey.PulseWidth],
                                 PulseAlternative.Alt3 => [PulseDataKey.PulseWidth],
-                                _ => [PulseDataKey.PulseWidth],
+                                _ => [PulseDataKey.CarrierFolding],
                             },
                             6 => PulseMode.Alternative switch
                             {
                                 PulseAlternative.Alt1 => [PulseDataKey.PulseWidth],
-                                _ => [],
+                                _ => [PulseDataKey.CarrierFolding],
                             },
                             8 => PulseMode.Alternative switch
                             {
                                 PulseAlternative.Alt1 => [PulseDataKey.PulseWidth],
-                                _ => [],
+                                _ => [PulseDataKey.CarrierFolding],
                             },
                             _ => [PulseDataKey.CarrierFolding]
                         },
@@ -468,7 +468,7 @@ namespace VvvfSimulator.Vvvf
                     PulseDataKey.Dipolar => -1,
                     PulseDataKey.Phase => 0,
                     PulseDataKey.PulseWidth => 1,
-                    PulseDataKey.CarrierFolding => 1,
+                    PulseDataKey.CarrierFolding => 0,
                     _ => 0,
                 };
             }
