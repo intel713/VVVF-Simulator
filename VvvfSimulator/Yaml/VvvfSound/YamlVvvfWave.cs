@@ -90,6 +90,15 @@ namespace VvvfSimulator.Yaml.VvvfSound
             return false;
 
         }
+
+        static double carrier_freq_jerk = 100;
+        static double highest_jerk = 0;
+        static double lowest_jerk = 0;
+        static double interval_jerk = 0;
+        static double random_range_jerk = 0;
+        static double random_interval_jerk = 0;
+
+
         public static PwmCalculateValues CalculateYaml(VvvfValues Control, YamlVvvfSoundData yvs)
         {
             YamlPulseMode pulse_mode;
@@ -205,7 +214,17 @@ namespace VvvfSimulator.Yaml.VvvfSound
                 if (carrier_freq_mode == YamlAsync.CarrierFrequency.CarrierFrequencyValueMode.Const)
                     carrier_freq_val = carrier_data.Constant;
                 else if (carrier_freq_mode == YamlAsync.CarrierFrequency.CarrierFrequencyValueMode.Moving)
-                    carrier_freq_val = GetMovingValue(carrier_data.MovingValue, original_wave_stat);
+                {
+                    if (!Control.IsFreeRun())
+                    {
+                        carrier_freq_val = GetMovingValue(carrier_data.MovingValue, original_wave_stat);
+                        carrier_freq_jerk = carrier_freq_val;
+                    }
+                    else
+                    {
+                        carrier_freq_val = carrier_freq_jerk;
+                    }
+                }
                 else if (carrier_freq_mode == YamlAsync.CarrierFrequency.CarrierFrequencyValueMode.Table)
                 {
                     var table_data = carrier_data.CarrierFrequencyTable;
@@ -221,7 +240,15 @@ namespace VvvfSimulator.Yaml.VvvfSound
                         bool condition_2 = original_wave_stat > carrier.ControlFrequencyFrom;
                         if (!condition_1 && !condition_2) continue;
 
-                        carrier_freq_val = carrier.CarrierFrequency;
+                        if (!Control.IsFreeRun())
+                        {
+                            carrier_freq_val = carrier.CarrierFrequency;
+                            carrier_freq_jerk = carrier_freq_val;
+                        }
+                        else
+                        {
+                            carrier_freq_val = carrier_freq_jerk;
+                        }
                         break;
 
                     }
@@ -236,24 +263,49 @@ namespace VvvfSimulator.Yaml.VvvfSound
                         highest = vibrato_data.Highest.Constant;
                     else
                     {
-                        var moving_val = vibrato_data.Highest.MovingValue;
-                        highest = GetMovingValue(moving_val, original_wave_stat);
+                        if (!Control.IsFreeRun())
+                        {
+                            var moving_val = vibrato_data.Highest.MovingValue;
+                            highest = GetMovingValue(moving_val, original_wave_stat);
+                            highest_jerk = highest;
+                        }
+                        else
+                        {
+                            highest = highest_jerk;
+                        }
                     }
 
                     if (vibrato_data.Lowest.Mode == YamlAsync.CarrierFrequency.YamlAsyncParameterCarrierFreqVibrato.YamlAsyncParameterVibratoValue.YamlAsyncParameterVibratoMode.Const)
                         lowest = vibrato_data.Lowest.Constant;
                     else
                     {
-                        var moving_val = vibrato_data.Lowest.MovingValue;
-                        lowest = GetMovingValue(moving_val, original_wave_stat);
+                        if (!Control.IsFreeRun())
+                        {
+                            var moving_val = vibrato_data.Lowest.MovingValue;
+                            lowest = GetMovingValue(moving_val, original_wave_stat);
+                            lowest_jerk = lowest;
+                        }
+                        else
+                        {
+                            lowest = lowest_jerk;
+                        }
                     }
 
                     double interval;
                     if (vibrato_data.Interval.Mode == YamlAsync.CarrierFrequency.YamlAsyncParameterCarrierFreqVibrato.YamlAsyncParameterVibratoValue.YamlAsyncParameterVibratoMode.Const)
                         interval = vibrato_data.Interval.Constant;
                     else
-                        interval = GetMovingValue(vibrato_data.Interval.MovingValue, original_wave_stat);
-
+                    {
+                        if (!Control.IsFreeRun())
+                        {
+                            interval = GetMovingValue(vibrato_data.Interval.MovingValue, original_wave_stat);
+                            interval_jerk = interval;
+                        }
+                        else
+                        {
+                            interval = interval_jerk;
+                        }
+                    }
                     carrier_freq_val = GetVibratoFrequency(lowest, highest, interval, vibrato_data.Continuous, Control);
                 }
 
@@ -262,10 +314,31 @@ namespace VvvfSimulator.Yaml.VvvfSound
                 //
                 double random_range = 0, random_interval = 0;
                 if (async_data.RandomData.Range.Mode == YamlAsyncParameterRandomValueMode.Const) random_range = async_data.RandomData.Range.Constant;
-                else random_range = GetMovingValue(async_data.RandomData.Range.MovingValue, original_wave_stat);
-
+                else
+                {
+                    if (!Control.IsFreeRun())
+                    {
+                        random_range = GetMovingValue(async_data.RandomData.Range.MovingValue, original_wave_stat);
+                        random_range_jerk = random_range;
+                    }
+                    else
+                    {
+                        random_range = random_range_jerk;
+                    }
+                }
                 if (async_data.RandomData.Interval.Mode == YamlAsyncParameterRandomValueMode.Const) random_interval = async_data.RandomData.Interval.Constant;
-                else random_interval = GetMovingValue(async_data.RandomData.Interval.MovingValue, original_wave_stat);
+                else
+                {
+                    if (!Control.IsFreeRun())
+                    {
+                        random_interval = GetMovingValue(async_data.RandomData.Interval.MovingValue, original_wave_stat);
+                        random_interval_jerk = random_interval;
+                    }
+                    else
+                    {
+                        random_interval = random_interval_jerk;
+                    }
+                }
 
                 carrier_freq = new CarrierFreq(carrier_freq_val, random_range, random_interval);
             }
