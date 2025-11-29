@@ -437,6 +437,7 @@ namespace VvvfSimulator.Vvvf
                             },
                             _ => [PulseDataKey.CarrierFolding]
                         },
+                        PulseTypeName.HO => [PulseDataKey.PulseWidth],
                         _ => [PulseDataKey.CarrierFolding]
                     };
                 }

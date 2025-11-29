@@ -131,18 +131,44 @@ namespace VvvfSimulator.Vvvf
         //
         // Pulse Calculation
         //
-        public static int GetHopPulse(double x, double amplitude, int carrier, int width)
+        public static int GetHopPulse(double x, double amplitude, int carrier, double zeroSW, int width)
         {
-            int totalSteps = carrier * 2;
-            double fixed_x = x % M_PI / (M_PI / totalSteps);
+            double step = M_PI_2 / carrier;
+            double fixed_x = x % M_2PI;
             double saw_value = -Saw(carrier * x);
             double modulated;
-            if (fixed_x > totalSteps - 1) modulated = -1;
-            else if (fixed_x > totalSteps / 2 + width) modulated = 1;
-            else if (fixed_x > totalSteps / 2 - width) modulated = 2 * amplitude - 1;
-            else if (fixed_x > 1) modulated = 1;
-            else modulated = -1;
-            if (x % M_2PI > M_PI) modulated = -modulated;
+            int Orthant = (int)((fixed_x / M_PI_2) % 4);
+
+            double alpha = step * zeroSW;
+            double beta = M_PI_2 - step * width;
+
+            double _GetSignal(double x)
+            {
+                if (0 <= x && x < alpha)
+                {
+                    return -1;
+                }
+                else if (alpha <= x && x < beta)
+                {
+                    return 1;
+                }
+                else if (beta <= x && x < M_PI_2)
+                {
+                    return 2 * amplitude - 1;
+                }
+                else
+                {
+                    return 0;
+                }
+            }
+
+            modulated = Orthant switch
+            {
+                0 => _GetSignal(fixed_x),
+                1 => _GetSignal(M_PI - fixed_x),
+                2 => -_GetSignal(fixed_x - M_PI),
+                _ => -_GetSignal(M_2PI - fixed_x)
+            };
 
             return ModulateSignal(modulated, saw_value) * 2;
         }
@@ -254,7 +280,7 @@ namespace VvvfSimulator.Vvvf
                     {
                         double diff_freq = rnd.NextDouble() * data.Range;
                         if (rnd.NextDouble() < 0.5) diff_freq = -diff_freq;
-                        silent_random_freq = data.BaseFrequency + diff_freq;
+                        silent_random_freq = data.BaseFrequency * Math.Pow(2, diff_freq / 100);
                     }
                     else
                     {
@@ -883,7 +909,7 @@ namespace VvvfSimulator.Vvvf
 
                                 SawVal = Orthant switch
                                 {
-                                    0 => SawVal = _GetCarrier(x, s),
+                                    0 => _GetCarrier(x, s),
                                     1 => _GetCarrier(M_PI - x, s),
                                     2 => -_GetCarrier(x - M_PI, s),
                                     _ => -_GetCarrier(M_2PI - x, s)
@@ -997,8 +1023,8 @@ namespace VvvfSimulator.Vvvf
                     {
                         int[] Keys = PulseCount switch
                         {
-                            5 => [9, 2, 13, 2, 17, 2, 21, 2, 25, 2, 29, 2, 33, 2, 37, 2,],
-                            7 => [15, 4, 15, 3, 7, 1, 11, 2, 19, 4, 23, 4, 27, 4, 31, 4, 35, 4, 39, 4,],
+                            5 => [9, 2, 13, 2, 17, 2, 21, 2, 25, 2, 29, 2, 33, 2, 37, 2],
+                            7 => [15, 4, 15, 3, 7, 1, 11, 2, 19, 4, 23, 4, 27, 4, 31, 4, 35, 4, 39, 4],
                             9 => [21, 6, 13, 3, 17, 4, 25, 6, 29, 6, 33, 6, 37, 6],
                             11 => [27, 8, 19, 5, 23, 6, 31, 8, 35, 8, 39, 8],
                             13 => [25, 7, 29, 8, 33, 10, 37, 10],
@@ -1006,8 +1032,10 @@ namespace VvvfSimulator.Vvvf
                             17 => [37, 11],
                             _ => [0],
                         };
-                        int Index = (int)PulseMode.Alternative + 1 > Keys.Length / 2 ? 0 : (int)PulseMode.Alternative;
-                        return GetHopPulse(SineX, Amplitude, Keys[2 * Index], Keys[2 * Index + 1]);
+                        int Index = (int)PulseMode.Alternative - 4 > 0 && (int)PulseMode.Alternative - 4 + 1 <= Keys.Length / 2 ?
+                            (int)PulseMode.Alternative - 4 : 0;
+                        double ZeroSwitching = Value.PulseData.GetValueOrDefault(PulseDataKey.PulseWidth, 0);
+                        return GetHopPulse(SineX, Amplitude, Keys[2 * Index], ZeroSwitching, Keys[2 * Index + 1]);
                     }
                 case PulseTypeName.SHE:
                     {
