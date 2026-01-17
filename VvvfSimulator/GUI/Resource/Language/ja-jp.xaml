@@ -32,8 +32,11 @@
     
     <system:String x:Key="MainWindow.Menu.File">ファイル</system:String>
     <system:String x:Key="MainWindow.Menu.File.Save">保存</system:String>
+    <system:String x:Key="MainWindow.Menu.File.Save.InputGesture">Ctrl+S</system:String>
     <system:String x:Key="MainWindow.Menu.File.SaveAs">名前を付けて保存</system:String>
-    <system:String x:Key="MainWindow.Menu.File.Load">開く</system:String>
+    <system:String x:Key="MainWindow.Menu.File.SaveAs.InputGesture">Ctrl+Shift+S</system:String>
+    <system:String x:Key="MainWindow.Menu.File.Open">開く</system:String>
+    <system:String x:Key="MainWindow.Menu.File.Open.InputGesture">Ctrl+O</system:String>
 
     <system:String x:Key="MainWindow.Menu.Edit">編集</system:String>
     <system:String x:Key="MainWindow.Menu.Edit.Reset">白紙に戻す</system:String>
@@ -112,6 +115,7 @@
     <system:String x:Key="MainWindow.TaskDescription.Generate.Movie.FFT.Original">FFTの動画生成：</system:String>
     <system:String x:Key="MainWindow.TaskDescription.Generate.Image.Hexagon.Original">電圧ベクトルの画像生成：</system:String>
     <system:String x:Key="MainWindow.TaskDescription.Generate.Image.FFT.Original">FFTの画像生成：</system:String>
+    <system:String x:Key="MainWindow.TaskDescription.Tools.AutoVoltage">変調率自動設定</system:String>
 
     <system:String x:Key="MainWindow.Message.File.Save.Ok.Title">いいね</system:String>
     <system:String x:Key="MainWindow.Message.File.Save.Ok.Message">保存しました</system:String>
@@ -136,7 +140,6 @@
     <system:String x:Key="MainWindow.Message.Generate.Image.FFT.Original.EnterFrequency">描画する周波数を入力</system:String>
     <system:String x:Key="MainWindow.Message.Tools.AutoVoltage.Error">
         変調率自動設定を使用する際は、次の事項を確認してください。\n
-        ・力行、回生パターンともに、2つ以上のパターンがあること。\n
         ・すべてのパターンの制御周波数条件が0以上であること。
     </system:String>
 
@@ -187,8 +190,11 @@
     
     <system:String x:Key="TrainAudio.SettingWindow.Menu.File">ファイル</system:String>
     <system:String x:Key="TrainAudio.SettingWindow.Menu.File.Save">保存</system:String>
+    <system:String x:Key="TrainAudio.SettingWindow.Menu.File.Save.InputGesture">Ctrl+S</system:String>
     <system:String x:Key="TrainAudio.SettingWindow.Menu.File.SaveAs">名前を付けて保存</system:String>
+    <system:String x:Key="TrainAudio.SettingWindow.Menu.File.SaveAs.InputGesture">Ctrl+Shift+S</system:String>
     <system:String x:Key="TrainAudio.SettingWindow.Menu.File.Open">開く</system:String>
+    <system:String x:Key="TrainAudio.SettingWindow.Menu.File.Open.InputGesture">Ctrl+O</system:String>
     <system:String x:Key="TrainAudio.SettingWindow.Menu.Parameter">環境値</system:String>
     <system:String x:Key="TrainAudio.SettingWindow.Menu.Parameter.Motor">電動機</system:String>
     <system:String x:Key="TrainAudio.SettingWindow.Menu.Parameter.Gear">歯車</system:String>
@@ -361,8 +367,11 @@
     <system:String x:Key="BaseFrequency.SettingWindow.Title">生成時基本周波数編集画面</system:String>
     <system:String x:Key="BaseFrequency.SettingWindow.Menu.File">ファイル</system:String>
     <system:String x:Key="BaseFrequency.SettingWindow.Menu.File.Save">保存</system:String>
+    <system:String x:Key="BaseFrequency.SettingWindow.Menu.File.Save.InputGesture">Ctrl+S</system:String>
     <system:String x:Key="BaseFrequency.SettingWindow.Menu.File.SaveAs">名前を付けて保存</system:String>
-    <system:String x:Key="BaseFrequency.SettingWindow.Menu.File.Load">開く</system:String>
+    <system:String x:Key="BaseFrequency.SettingWindow.Menu.File.SaveAs.InputGesture">Ctrl+Shift+S</system:String>
+    <system:String x:Key="BaseFrequency.SettingWindow.Menu.File.Open">開く</system:String>
+    <system:String x:Key="BaseFrequency.SettingWindow.Menu.File.Open.InputGesture">Ctrl+O</system:String>
     <system:String x:Key="BaseFrequency.SettingWindow.Menu.Edit">編集</system:String>
     <system:String x:Key="BaseFrequency.SettingWindow.Menu.Edit.Reset">白紙に戻す</system:String>
     <system:String x:Key="BaseFrequency.SettingWindow.Menu.Edit.Midi">MIDIを読み込む</system:String>

@@ -187,10 +187,10 @@ namespace VvvfSimulator.GUI.TrainAudio
         private void Window_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.IsRepeat) return;
-            if (e.Key.Equals(Key.S) && e.KeyboardDevice.Modifiers == ModifierKeys.Control)
+            if (e.Key.Equals(Key.S) && (Keyboard.Modifiers & ModifierKeys.Control) == ModifierKeys.Control)
             {
                 e.Handled = true;
-                if (Data.TrainAudio.Manager.LoadPath.Length == 0)
+                if (Data.TrainAudio.Manager.LoadPath.Length == 0 || (Keyboard.Modifiers & ModifierKeys.Shift) == ModifierKeys.Shift)
                 {
                     var dialog = new SaveFileDialog
                     {
@@ -202,6 +202,17 @@ namespace VvvfSimulator.GUI.TrainAudio
                 }
                 else
                     SaveYaml(Data.TrainAudio.Manager.LoadPath, false);
+                return;
+            }
+            if (e.Key.Equals(Key.O) && e.KeyboardDevice.Modifiers == ModifierKeys.Control)
+            {
+                var dialog = new OpenFileDialog
+                {
+                    Filter = "Yaml (*.yaml)|*.yaml|All (*.*)|*.*"
+                };
+                if (SaveBefore("TrainAudio.SettingWindow.Message.File.SaveBefore.Load") && (dialog.ShowDialog() ?? false))
+                    LoadYaml(dialog.FileName);
+                return;
             }
         }
     }

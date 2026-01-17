@@ -148,9 +148,9 @@
             <Image Style="{StaticResource WindowIconStyle}"/>
             <Menu Style="{DynamicResource MenuStyle}" Grid.Column="1">
                 <MenuItem Header="{DynamicResource MainWindow.Menu.File}">
-                    <MenuItem Header="{DynamicResource MainWindow.Menu.File.Save}" Tag="Save" Click="File_Menu_Click"/>
-                    <MenuItem Header="{DynamicResource MainWindow.Menu.File.SaveAs}" Tag="SaveAs" Click="File_Menu_Click"/>
-                    <MenuItem Header="{DynamicResource MainWindow.Menu.File.Load}" Tag="Load" Click="File_Menu_Click"/>
+                    <MenuItem Header="{DynamicResource MainWindow.Menu.File.Save}" Tag="Save" Click="File_Menu_Click" InputGestureText="{DynamicResource MainWindow.Menu.File.Save.InputGesture}"/>
+                    <MenuItem Header="{DynamicResource MainWindow.Menu.File.SaveAs}" Tag="SaveAs" Click="File_Menu_Click" InputGestureText="{DynamicResource MainWindow.Menu.File.SaveAs.InputGesture}"/>
+                    <MenuItem Header="{DynamicResource MainWindow.Menu.File.Open}" Tag="Load" Click="File_Menu_Click" InputGestureText="{DynamicResource MainWindow.Menu.File.Open.InputGesture}"/>
                 </MenuItem>
 
                 <MenuItem Header="{DynamicResource MainWindow.Menu.Edit}">

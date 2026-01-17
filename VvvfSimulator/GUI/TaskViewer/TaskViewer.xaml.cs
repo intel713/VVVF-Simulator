@@ -7,16 +7,28 @@ using System.Windows.Controls;
 using System.Windows.Media;
 using VvvfSimulator.GUI.Resource.Language;
 using VvvfSimulator.GUI.Resource.Theme;
-using static VvvfSimulator.Generation.GenerateCommon.GenerationParameter;
 
 namespace VvvfSimulator.GUI.TaskViewer
 {
-    /// <summary>
-    /// Task Progress の Class
-    /// </summary>
-    public class TaskProgressData
+    public class TaskProgress
     {
-        public ProgressData Data { get; set; }
+        public double Progress = 0;
+        public double Total = -1;
+
+        public double RelativeProgress
+        {
+            get
+            {
+                if (Total == -1) return 0;
+                return Progress / Total * 100;
+            }
+        }
+
+        public bool Cancel = false;
+    }
+    public class TaskInfo
+    {
+        public TaskProgress Data { get; set; }
         public Task Task { get; set; }
         public string Description { get; set; }
         public bool Cancelable
@@ -47,7 +59,7 @@ namespace VvvfSimulator.GUI.TaskViewer
             }
         }
 
-        public TaskProgressData(Task Task, ProgressData progressData, string Description)
+        public TaskInfo(Task Task, TaskProgress progressData, string Description)
         {
             this.Task = Task;
             this.Data = progressData;
@@ -61,7 +73,7 @@ namespace VvvfSimulator.GUI.TaskViewer
     public partial class TaskViewer : Window
     {
         // Task Progress List
-        public static List<TaskProgressData> TaskList = [];
+        public static List<TaskInfo> TaskList = [];
 
         public TaskViewer()
         {
@@ -111,7 +123,7 @@ namespace VvvfSimulator.GUI.TaskViewer
 
             for (int i = 0; i < TaskList.Count; i++)
             {
-                TaskProgressData data = TaskList[i];
+                TaskInfo data = TaskList[i];
                 if (data.Task.Id.ToString().Equals(tag.ToString()))
                 {
                     data.Data.Cancel = true;

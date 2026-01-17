@@ -32,8 +32,11 @@
 
     <system:String x:Key="MainWindow.Menu.File">文件</system:String>
     <system:String x:Key="MainWindow.Menu.File.Save">保存</system:String>
+    <system:String x:Key="MainWindow.Menu.File.Save.InputGesture">Ctrl+S</system:String>
     <system:String x:Key="MainWindow.Menu.File.SaveAs">另存为</system:String>
-    <system:String x:Key="MainWindow.Menu.File.Load">打开</system:String>
+    <system:String x:Key="MainWindow.Menu.File.SaveAs.InputGesture">Ctrl+Shift+S</system:String>
+    <system:String x:Key="MainWindow.Menu.File.Open">打开</system:String>
+    <system:String x:Key="MainWindow.Menu.File.Open.InputGesture">Ctrl+O</system:String>
 
     <system:String x:Key="MainWindow.Menu.Edit">编辑</system:String>
     <system:String x:Key="MainWindow.Menu.Edit.Reset">重置</system:String>
@@ -112,6 +115,7 @@
     <system:String x:Key="MainWindow.TaskDescription.Generate.Movie.FFT.Original">生成视频 - FFT</system:String>
     <system:String x:Key="MainWindow.TaskDescription.Generate.Image.Hexagon.Original">生成图片 - 电压积分</system:String>
     <system:String x:Key="MainWindow.TaskDescription.Generate.Image.FFT.Original">生成图片 - FFT</system:String>
+    <system:String x:Key="MainWindow.TaskDescription.Tools.AutoVoltage">自动设置调制度</system:String>
 
     <system:String x:Key="MainWindow.Message.File.Save.Ok.Title">信息</system:String>
     <system:String x:Key="MainWindow.Message.File.Save.Ok.Message">保存成功</system:String>
@@ -136,7 +140,6 @@
     <system:String x:Key="MainWindow.Message.Generate.Image.FFT.Original.EnterFrequency">输入渲染频率</system:String>
     <system:String x:Key="MainWindow.Message.Tools.AutoVoltage.Error">
         使用自动设置调制度时请检查以下内容：\n
-        ・加速和制动程序必须要有两个或两个以上的调制方式\n
         ・所有调制方式的起始频率值必须大于或等于 0
     </system:String>
 
@@ -187,8 +190,11 @@
 
     <system:String x:Key="TrainAudio.SettingWindow.Menu.File">文件</system:String>
     <system:String x:Key="TrainAudio.SettingWindow.Menu.File.Save">保存</system:String>
+    <system:String x:Key="TrainAudio.SettingWindow.Menu.File.Save.InputGesture">Ctrl+S</system:String>
     <system:String x:Key="TrainAudio.SettingWindow.Menu.File.SaveAs">另存为</system:String>
+    <system:String x:Key="TrainAudio.SettingWindow.Menu.File.SaveAs.InputGesture">Ctrl+Shift+S</system:String>
     <system:String x:Key="TrainAudio.SettingWindow.Menu.File.Open">打开</system:String>
+    <system:String x:Key="TrainAudio.SettingWindow.Menu.File.Open.InputGesture">Ctrl+O</system:String>
     <system:String x:Key="TrainAudio.SettingWindow.Menu.Parameter">参数</system:String>
     <system:String x:Key="TrainAudio.SettingWindow.Menu.Parameter.Motor">电机</system:String>
     <system:String x:Key="TrainAudio.SettingWindow.Menu.Parameter.Gear">齿轮</system:String>
@@ -361,8 +367,11 @@
     <system:String x:Key="BaseFrequency.SettingWindow.Title">基频变化速率编辑器</system:String>
     <system:String x:Key="BaseFrequency.SettingWindow.Menu.File">文件</system:String>
     <system:String x:Key="BaseFrequency.SettingWindow.Menu.File.Save">保存</system:String>
+    <system:String x:Key="BaseFrequency.SettingWindow.Menu.File.Save.InputGesture">Ctrl+S</system:String>
     <system:String x:Key="BaseFrequency.SettingWindow.Menu.File.SaveAs">另存为</system:String>
-    <system:String x:Key="BaseFrequency.SettingWindow.Menu.File.Load">加载</system:String>
+    <system:String x:Key="BaseFrequency.SettingWindow.Menu.File.SaveAs.InputGesture">Ctrl+Shift+S</system:String>
+    <system:String x:Key="BaseFrequency.SettingWindow.Menu.File.Open">加载</system:String>
+    <system:String x:Key="BaseFrequency.SettingWindow.Menu.File.Open.InputGesture">Ctrl+O</system:String>
     <system:String x:Key="BaseFrequency.SettingWindow.Menu.Edit">编辑</system:String>
     <system:String x:Key="BaseFrequency.SettingWindow.Menu.Edit.Reset">重置</system:String>
     <system:String x:Key="BaseFrequency.SettingWindow.Menu.Edit.Midi">加载 MIDI</system:String>

@@ -290,10 +290,10 @@ namespace VvvfSimulator.GUI.BaseFrequency
         private void Window_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.IsRepeat) return;
-            if (e.Key.Equals(Key.S) && e.KeyboardDevice.Modifiers == ModifierKeys.Control)
+            if (e.Key.Equals(Key.S) && (Keyboard.Modifiers & ModifierKeys.Control) == ModifierKeys.Control)
             {
                 e.Handled = true;
-                if (Data.BaseFrequency.Manager.LoadPath.Length == 0)
+                if (Data.BaseFrequency.Manager.LoadPath.Length == 0 || (Keyboard.Modifiers & ModifierKeys.Shift) == ModifierKeys.Shift)
                 {
                     var dialog = new SaveFileDialog
                     {
@@ -305,6 +305,17 @@ namespace VvvfSimulator.GUI.BaseFrequency
                 }
                 else
                     SaveYaml(Data.BaseFrequency.Manager.LoadPath, false);
+                return;
+            }
+            if (e.Key.Equals(Key.O) && e.KeyboardDevice.Modifiers == ModifierKeys.Control)
+            {
+                var dialog = new OpenFileDialog
+                {
+                    Filter = "Yaml (*.yaml)|*.yaml|All (*.*)|*.*"
+                };
+                if (SaveBefore("BaseFrequency.SettingWindow.Message.File.SaveBefore.Load") && (dialog.ShowDialog() ?? false))
+                    LoadYaml(dialog.FileName);
+                return;
             }
         }
     }

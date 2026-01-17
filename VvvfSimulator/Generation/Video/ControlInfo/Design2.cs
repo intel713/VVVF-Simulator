@@ -5,14 +5,13 @@ using System.Drawing;
 using System.Drawing.Imaging;
 using System.IO;
 using System.Threading.Tasks;
+using VvvfSimulator.Data.BaseFrequency;
 using VvvfSimulator.GUI.Util;
 using VvvfSimulator.Vvvf;
-using VvvfSimulator.Data.BaseFrequency;
+using static VvvfSimulator.Data.Vvvf.Struct.PulseControl.Pulse;
 using static VvvfSimulator.Generation.GenerateCommon;
-using static VvvfSimulator.Generation.GenerateCommon.GenerationParameter;
 using static VvvfSimulator.Generation.Video.ControlInfo.Common;
 using static VvvfSimulator.Vvvf.Model.Struct;
-using static VvvfSimulator.Data.Vvvf.Struct.PulseControl.Pulse;
 using Point = System.Drawing.Point;
 using Size = System.Drawing.Size;
 
@@ -204,7 +203,7 @@ namespace VvvfSimulator.Generation.Video.ControlInfo
 
             Data.Vvvf.Struct vvvfData = Parameter.VvvfData;
             StructCompiled baseFreqData = Parameter.BaseFrequencyData;
-            ProgressData progressData = Parameter.Progress;
+            GUI.TaskViewer.TaskProgress progressData = Parameter.Progress;
 
             Domain Domain = new(Parameter.TrainData.MotorSpec);
             Domain.GetCarrierInstance().UseSimpleFrequency = true;

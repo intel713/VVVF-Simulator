@@ -62,11 +62,11 @@ namespace VvvfSimulator.GUI.MIDIConvert
                         ymd.GetCompiled(),
                         Data.Vvvf.Manager.DeepClone(Data.Vvvf.Manager.Current), 
                         Data.TrainAudio.Manager.DeepClone(Data.TrainAudio.Manager.Current),
-                        new GenerationParameter.ProgressData()
+                        new TaskProgress()
                     );
 
                     string task_description = string.Format(LanguageManager.GetString("MidiConvert.TaskDescription.Convert.Description"), Path.GetFileNameWithoutExtension(midi_path), i, priority);
-                    String export_path = Path.GetFullPath(file_path + "_" + i.ToString() + "_" + priority.ToString() + Path.GetExtension(output_path));
+                    string export_path = Path.GetFullPath(file_path + "_" + i.ToString() + "_" + priority.ToString() + Path.GetExtension(output_path));
 
                     Task task = Task.Run(() =>
                     {
@@ -81,7 +81,7 @@ namespace VvvfSimulator.GUI.MIDIConvert
                         }
                     });
 
-                    TaskProgressData taskProgressData = new(task, generationBasicParameter.Progress, task_description);
+                    TaskInfo taskProgressData = new(task, generationBasicParameter.Progress, task_description);
                     TaskViewer.TaskViewer.TaskList.Add(taskProgressData);
 
                     if(!midi_Convert_Config.MultiThread) task.Wait();

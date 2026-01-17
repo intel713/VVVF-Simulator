@@ -12,12 +12,9 @@ using VvvfSimulator.GUI.Resource.Language;
 using VvvfSimulator.GUI.Simulator.RealTime;
 using VvvfSimulator.GUI.TaskViewer;
 using VvvfSimulator.GUI.Util;
-using VvvfSimulator.Vvvf;
-using VvvfSimulator.Vvvf.Modulation;
 using YamlDotNet.Core;
 using static VvvfSimulator.Generation.Audio.RealTime;
 using static VvvfSimulator.Generation.GenerateCommon;
-using static VvvfSimulator.Generation.GenerateCommon.GenerationParameter;
 
 namespace VvvfSimulator
 {
@@ -75,7 +72,7 @@ namespace VvvfSimulator
         private void OnFirstLoad()
         {
             if (App.HasArgs) LoadYaml(App.StartupArgs[0]);
-            CustomPwmPresets.Load();
+            Vvvf.Modulation.CustomPwmPresets.Load();
             Generation.Video.Fonts.Manager.Load();
         }
 
@@ -199,7 +196,7 @@ namespace VvvfSimulator
                 Data.BaseFrequency.Manager.Current.GetCompiled(),
                 Data.Vvvf.Manager.DeepClone(Data.Vvvf.Manager.Current),
                 Data.TrainAudio.Manager.DeepClone(Data.TrainAudio.Manager.Current),
-                new ProgressData()
+                new TaskProgress()
             );
         }
         private bool SolveCommand(string[] command)
@@ -238,7 +235,7 @@ namespace VvvfSimulator
                         SystemSounds.Beep.Play();
                     });
 
-                    TaskProgressData taskProgressData = new(task, parameter.Progress,
+                    TaskInfo taskProgressData = new(task, parameter.Progress,
                         LanguageManager.GetString("MainWindow.TaskDescription.Generate.Audio.Vvvf." + command[2]) + Data.Vvvf.Manager.GetLoadedYamlName()
                     );
                     TaskViewer.TaskList.Add(taskProgressData);
@@ -374,7 +371,7 @@ namespace VvvfSimulator
                         SystemSounds.Beep.Play();
                     });
 
-                    TaskProgressData taskProgressData = new(task, parameter.Progress, LanguageManager.GetString("MainWindow.TaskDescription.Generate.Audio.Train") + Data.Vvvf.Manager.GetLoadedYamlName());
+                    TaskInfo taskProgressData = new(task, parameter.Progress, LanguageManager.GetString("MainWindow.TaskDescription.Generate.Audio.Train") + Data.Vvvf.Manager.GetLoadedYamlName());
                     TaskViewer.TaskList.Add(taskProgressData);
                 }
                 else if (command[1].Equals("RealTime"))
@@ -491,7 +488,7 @@ namespace VvvfSimulator
                         SystemSounds.Beep.Play();
                     });
 
-                    TaskProgressData taskProgressData = new(task, parameter.Progress, LanguageManager.GetString("MainWindow.TaskDescription.Generate.Movie.Control.Original") + Data.Vvvf.Manager.GetLoadedYamlName());
+                    TaskInfo taskProgressData = new(task, parameter.Progress, LanguageManager.GetString("MainWindow.TaskDescription.Generate.Movie.Control.Original") + Data.Vvvf.Manager.GetLoadedYamlName());
                     TaskViewer.TaskList.Add(taskProgressData);
                 }
 
@@ -513,7 +510,7 @@ namespace VvvfSimulator
                         SystemSounds.Beep.Play();
                     });
 
-                    TaskProgressData taskProgressData = new(task, parameter.Progress, LanguageManager.GetString("MainWindow.TaskDescription.Generate.Movie.Control.Original2") + Data.Vvvf.Manager.GetLoadedYamlName());
+                    TaskInfo taskProgressData = new(task, parameter.Progress, LanguageManager.GetString("MainWindow.TaskDescription.Generate.Movie.Control.Original2") + Data.Vvvf.Manager.GetLoadedYamlName());
                     TaskViewer.TaskList.Add(taskProgressData);
                 }
             }
@@ -547,7 +544,7 @@ namespace VvvfSimulator
                     "Spaced" => LanguageManager.GetString("MainWindow.TaskDescription.Generate.Movie.WaveForm.Spaced"),
                     _ => LanguageManager.GetString("MainWindow.TaskDescription.Generate.Movie.WaveForm.UVW")
                 };
-                TaskProgressData taskProgressData = new(task, parameter.Progress, description + Data.Vvvf.Manager.GetLoadedYamlName());
+                TaskInfo taskProgressData = new(task, parameter.Progress, description + Data.Vvvf.Manager.GetLoadedYamlName());
                 TaskViewer.TaskList.Add(taskProgressData);
             }
             else if (command[0].Equals("Hexagon"))
@@ -572,7 +569,7 @@ namespace VvvfSimulator
                         SystemSounds.Beep.Play();
                     });
 
-                    TaskProgressData taskProgressData = new(task, parameter.Progress, LanguageManager.GetString("MainWindow.TaskDescription.Generate.Movie.Hexagon.Original") + Data.Vvvf.Manager.GetLoadedYamlName());
+                    TaskInfo taskProgressData = new(task, parameter.Progress, LanguageManager.GetString("MainWindow.TaskDescription.Generate.Movie.Hexagon.Original") + Data.Vvvf.Manager.GetLoadedYamlName());
                     TaskViewer.TaskList.Add(taskProgressData);
                 }
                 else if (command[1].Equals("Explain"))
@@ -598,7 +595,7 @@ namespace VvvfSimulator
                         SystemSounds.Beep.Play();
                     });
 
-                    TaskProgressData taskProgressData = new(task, parameter.Progress, LanguageManager.GetString("MainWindow.TaskDescription.Generate.Movie.Hexagon.Explain") + Data.Vvvf.Manager.GetLoadedYamlName());
+                    TaskInfo taskProgressData = new(task, parameter.Progress, LanguageManager.GetString("MainWindow.TaskDescription.Generate.Movie.Hexagon.Explain") + Data.Vvvf.Manager.GetLoadedYamlName());
                     TaskViewer.TaskList.Add(taskProgressData);
                 }
                 else if (command[1].Equals("OriginalImage"))
@@ -623,7 +620,7 @@ namespace VvvfSimulator
                         SystemSounds.Beep.Play();
                     });
 
-                    TaskProgressData taskProgressData = new(task, parameter.Progress, LanguageManager.GetString("MainWindow.TaskDescription.Generate.Image.Hexagon.Original") + Data.Vvvf.Manager.GetLoadedYamlName());
+                    TaskInfo taskProgressData = new(task, parameter.Progress, LanguageManager.GetString("MainWindow.TaskDescription.Generate.Image.Hexagon.Original") + Data.Vvvf.Manager.GetLoadedYamlName());
                     TaskViewer.TaskList.Add(taskProgressData);
                 }
 
@@ -649,7 +646,7 @@ namespace VvvfSimulator
                         SystemSounds.Beep.Play();
                     });
 
-                    TaskProgressData taskProgressData = new(task, parameter.Progress, LanguageManager.GetString("MainWindow.TaskDescription.Generate.Movie.FFT.Original") + Data.Vvvf.Manager.GetLoadedYamlName());
+                    TaskInfo taskProgressData = new(task, parameter.Progress, LanguageManager.GetString("MainWindow.TaskDescription.Generate.Movie.FFT.Original") + Data.Vvvf.Manager.GetLoadedYamlName());
                     TaskViewer.TaskList.Add(taskProgressData);
                 }
                 else if (command[1].Equals("Image"))
@@ -671,7 +668,7 @@ namespace VvvfSimulator
                         }
                         SystemSounds.Beep.Play();
                     });
-                    TaskProgressData taskProgressData = new(task, parameter.Progress, LanguageManager.GetString("MainWindow.TaskDescription.Generate.Image.FFT.Original") + Data.Vvvf.Manager.GetLoadedYamlName());
+                    TaskInfo taskProgressData = new(task, parameter.Progress, LanguageManager.GetString("MainWindow.TaskDescription.Generate.Image.FFT.Original") + Data.Vvvf.Manager.GetLoadedYamlName());
                     TaskViewer.TaskList.Add(taskProgressData);
                 }
 
@@ -759,9 +756,9 @@ namespace VvvfSimulator
                     new (LanguageManager.GetString("MainWindow.Dialog.Tools.AutoVoltage.AcceleratePatternMaxVoltage"), DialogInputWindow.InputContextMode.TextBox, 100.0, typeof(double)),
                     new (LanguageManager.GetString("MainWindow.Dialog.Tools.AutoVoltage.BrakePatternMaxFrequency"), DialogInputWindow.InputContextMode.TextBox, DefaultBrakeMaxFrequency, typeof(double)),
                     new (LanguageManager.GetString("MainWindow.Dialog.Tools.AutoVoltage.BrakePatternMaxVoltage"), DialogInputWindow.InputContextMode.TextBox, 100.0, typeof(double)),
-                    new (LanguageManager.GetString("MainWindow.Dialog.Tools.AutoVoltage.CalculationType"), DialogInputWindow.InputContextMode.ComboBox, FriendlyNameConverter.GetEquationSolverTypeNames(), typeof(MyMath.EquationSolver.EquationSolverType)),
-                    new (LanguageManager.GetString("MainWindow.Dialog.Tools.AutoVoltage.MaxEffort"), DialogInputWindow.InputContextMode.TextBox, 50, typeof(int)),
-                    new (LanguageManager.GetString("MainWindow.Dialog.Tools.AutoVoltage.Precision"), DialogInputWindow.InputContextMode.TextBox, 0.5, typeof(double)),
+                    new (LanguageManager.GetString("MainWindow.Dialog.Tools.AutoVoltage.CalculationType"), DialogInputWindow.InputContextMode.ComboBox, FriendlyNameConverter.GetEquationSolverTypeNames(), typeof(Vvvf.MyMath.EquationSolver.EquationSolverType)),
+                    new (LanguageManager.GetString("MainWindow.Dialog.Tools.AutoVoltage.MaxEffort"), DialogInputWindow.InputContextMode.TextBox, 25, typeof(int)),
+                    new (LanguageManager.GetString("MainWindow.Dialog.Tools.AutoVoltage.Precision"), DialogInputWindow.InputContextMode.TextBox, 0.01, typeof(double)),
                 ];
                 DialogInputWindow AutoModulationConfigWindow = new(
                     this,
@@ -805,24 +802,30 @@ namespace VvvfSimulator
                     AutoModulationConfigWindow.GetValue<double>(1),
                     AutoModulationConfigWindow.GetValue<double>(2),
                     AutoModulationConfigWindow.GetValue<double>(3),
-                    AutoModulationConfigWindow.GetValue<MyMath.EquationSolver.EquationSolverType>(4),
+                    AutoModulationConfigWindow.GetValue<Vvvf.MyMath.EquationSolver.EquationSolverType>(4),
                     AutoModulationConfigWindow.GetValue<int>(5),
                     AutoModulationConfigWindow.GetValue<double>(6),
                     AutoModulationTableConfigWindow.GetValue<int>(0),
                     AutoModulationTableConfigWindow.GetValue<bool>(1)
                 );
 
-                Task.Run(() =>
-                {
+                TaskViewer Viewer = new();
+                TaskProgress Progress = new();
 
-                    bool result = Data.Tool.AutoModulationIndexSolver.Run(Configuration);
+                Task Solver = Task.Run(() =>
+                {
+                    
+                    bool result = Data.Tool.AutoModulationIndexSolver.Run(Progress, Configuration);
                     if (!result)
                         DialogBox.Show(this, LanguageManager.GetStringWithNewLine("MainWindow.Message.Tools.AutoVoltage.Error"), LanguageManager.GetString("Generic.Title.Error"), [DialogBoxButton.Ok], DialogBoxIcon.Error);
-
-                    SetInteractive(true);
-                    SystemSounds.Beep.Play();
+                    Dispatcher.Invoke(() => Viewer.Close());
+                    Quit();
                 });
 
+                TaskInfo taskProgressData = new(Solver, Progress, LanguageManager.GetString("MainWindow.TaskDescription.Tools.AutoVoltage"));
+                TaskViewer.TaskList.Add(taskProgressData);
+
+                Viewer.Show();
             }
             else if (tag_str.Equals("FreeRunAmpZero"))
             {
@@ -1087,10 +1090,10 @@ namespace VvvfSimulator
         private void Window_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.IsRepeat) return;
-            if (e.Key.Equals(Key.S) && e.KeyboardDevice.Modifiers == ModifierKeys.Control)
+            if (e.Key.Equals(Key.S) && (Keyboard.Modifiers & ModifierKeys.Control) == ModifierKeys.Control)
             {
                 e.Handled = true;
-                if (Data.Vvvf.Manager.LoadPath.Length == 0)
+                if (Data.Vvvf.Manager.LoadPath.Length == 0 || (Keyboard.Modifiers & ModifierKeys.Shift) == ModifierKeys.Shift)
                 {
                     var dialog = new SaveFileDialog
                     {
@@ -1102,6 +1105,17 @@ namespace VvvfSimulator
                 }
                 else
                     SaveYaml(Data.Vvvf.Manager.LoadPath, false);
+                return;
+            }
+            if (e.Key.Equals(Key.O) && e.KeyboardDevice.Modifiers == ModifierKeys.Control)
+            {
+                var dialog = new OpenFileDialog
+                {
+                    Filter = "Yaml (*.yaml)|*.yaml|All (*.*)|*.*"
+                };
+                if (SaveBefore("MainWindow.Message.File.SaveBefore.Load") && (dialog.ShowDialog() ?? false))
+                    LoadYaml(dialog.FileName);
+                return;
             }
         }
     }

@@ -17,8 +17,8 @@ namespace VvvfSimulator.Vvvf.Model
         public void Process(double dt, double ωe, PhaseState Voltage)
         {
             Parameter.Ωe = ωe;
-            Parameter.Vdq0[0] = (Math.Cos(Parameter.Θmr) * Voltage.U + Math.Cos(Parameter.Θmr - M_2PI / 3) * Voltage.V + Math.Cos(Parameter.Θmr + M_2PI / 3) * Voltage.W) * Specification.V / 2.0;
-            Parameter.Vdq0[1] = (-Math.Sin(Parameter.Θmr) * Voltage.U + -Math.Sin(Parameter.Θmr - M_2PI / 3) * Voltage.V + -Math.Sin(Parameter.Θmr + M_2PI / 3) * Voltage.W) * Specification.V / 2.0;
+            Parameter.Vdq0[0] = (Math.Cos(Parameter.Θmr) * Voltage.U + Math.Cos(Parameter.Θmr + M_2PI / 3) * Voltage.V + Math.Cos(Parameter.Θmr - M_2PI / 3) * Voltage.W) * Specification.V / 2.0;
+            Parameter.Vdq0[1] = (-Math.Sin(Parameter.Θmr) * Voltage.U - Math.Sin(Parameter.Θmr + M_2PI / 3) * Voltage.V - Math.Sin(Parameter.Θmr - M_2PI / 3) * Voltage.W) * Specification.V / 2.0;
 
             double ws = Parameter.Ωe;    // Electrical angular frequency [rad/s]
             double wr0 = Parameter.Ωr;   // Mechanical angular speed [rad/s] (initial value)

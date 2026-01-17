@@ -3,13 +3,12 @@ using System;
 using System.Drawing;
 using System.Drawing.Imaging;
 using System.IO;
+using VvvfSimulator.Data.Vvvf;
 using VvvfSimulator.GUI.Util;
 using VvvfSimulator.Vvvf;
-using VvvfSimulator.Data.Vvvf;
 using static VvvfSimulator.Generation.GenerateCommon;
-using static VvvfSimulator.Generation.GenerateCommon.GenerationParameter;
-using static VvvfSimulator.Vvvf.MyMath;
 using static VvvfSimulator.Vvvf.Model.Struct;
+using static VvvfSimulator.Vvvf.MyMath;
 
 namespace VvvfSimulator.Generation.Video.Hexagon
 {
@@ -45,7 +44,7 @@ namespace VvvfSimulator.Generation.Video.Hexagon
             Viewer?.Show();
 
             Data.Vvvf.Struct vvvfData = Parameter.VvvfData;
-            ProgressData progressData = Parameter.Progress;
+            GUI.TaskViewer.TaskProgress progressData = Parameter.Progress;
             Domain Domain = new(Parameter.TrainData.MotorSpec);
 
             VideoWriter Writer = new(Path, FourCC.H264, fps, new OpenCvSharp.Size(widthTotalImage, heightTotalImage));

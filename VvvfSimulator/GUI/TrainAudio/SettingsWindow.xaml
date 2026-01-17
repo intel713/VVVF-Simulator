@@ -43,9 +43,9 @@
             <Image Style="{StaticResource WindowIconStyle}"/>
             <Menu Grid.Column="1" Style="{DynamicResource MenuStyle}">
                 <MenuItem Header="{DynamicResource TrainAudio.SettingWindow.Menu.File}">
-                    <MenuItem Header="{DynamicResource TrainAudio.SettingWindow.Menu.File.Save}" Tag="Save" Click="File_Menu_Click"/>
-                    <MenuItem Header="{DynamicResource TrainAudio.SettingWindow.Menu.File.SaveAs}" Tag="SaveAs" Click="File_Menu_Click"/>
-                    <MenuItem Header="{DynamicResource TrainAudio.SettingWindow.Menu.File.Open}" Tag="Open" Click="File_Menu_Click"/>
+                    <MenuItem Header="{DynamicResource TrainAudio.SettingWindow.Menu.File.Save}" Tag="Save" Click="File_Menu_Click" InputGestureText="{DynamicResource TrainAudio.SettingWindow.Menu.File.Save.InputGesture}"/>
+                    <MenuItem Header="{DynamicResource TrainAudio.SettingWindow.Menu.File.SaveAs}" Tag="SaveAs" Click="File_Menu_Click" InputGestureText="{DynamicResource TrainAudio.SettingWindow.Menu.File.SaveAs.InputGesture}"/>
+                    <MenuItem Header="{DynamicResource TrainAudio.SettingWindow.Menu.File.Open}" Tag="Open" Click="File_Menu_Click" InputGestureText="{DynamicResource TrainAudio.SettingWindow.Menu.File.Open.InputGesture}"/>
                 </MenuItem>
                 <MenuItem Header="{DynamicResource TrainAudio.SettingWindow.Menu.Parameter}">
                     <MenuItem Header="{DynamicResource TrainAudio.SettingWindow.Menu.Parameter.Motor}" Tag="Motor" Click="Parameter_Menu_Click"/>

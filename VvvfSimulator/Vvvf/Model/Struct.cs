@@ -184,7 +184,7 @@ namespace VvvfSimulator.Vvvf.Model
             ])]
             public bool IsNone { get; } = true;
             public bool IsZeroOutput { get; } = true;
-            public int PwmLevel { get; set; }
+            public int PwmLevel { get; }
             public Data.Vvvf.Struct.PulseControl? PulsePattern { get; } = null;
             public CarrierParameter? CarrierFrequency { get; } = null;
             public Dictionary<Data.Vvvf.Struct.PulseControl.Pulse.PulseDataKey, double>? PulseData { get; } = null;

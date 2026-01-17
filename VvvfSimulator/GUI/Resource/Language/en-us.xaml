@@ -32,8 +32,11 @@
 
     <system:String x:Key="MainWindow.Menu.File">File</system:String>
     <system:String x:Key="MainWindow.Menu.File.Save">Save</system:String>
+    <system:String x:Key="MainWindow.Menu.File.Save.InputGesture">Ctrl+S</system:String>
     <system:String x:Key="MainWindow.Menu.File.SaveAs">Save As</system:String>
-    <system:String x:Key="MainWindow.Menu.File.Load">Open</system:String>
+    <system:String x:Key="MainWindow.Menu.File.SaveAs.InputGesture">Ctrl+Shift+S</system:String>
+    <system:String x:Key="MainWindow.Menu.File.Open">Open</system:String>
+    <system:String x:Key="MainWindow.Menu.File.Open.InputGesture">Ctrl+O</system:String>
 
     <system:String x:Key="MainWindow.Menu.Edit">Edit</system:String>
     <system:String x:Key="MainWindow.Menu.Edit.Reset">Reset</system:String>
@@ -112,6 +115,7 @@
     <system:String x:Key="MainWindow.TaskDescription.Generate.Movie.FFT.Original">FFT Movie Generation：</system:String>
     <system:String x:Key="MainWindow.TaskDescription.Generate.Image.Hexagon.Original">Voltage Vector Image Generation：</system:String>
     <system:String x:Key="MainWindow.TaskDescription.Generate.Image.FFT.Original">FFT Image Generation：</system:String>
+    <system:String x:Key="MainWindow.TaskDescription.Tools.AutoVoltage">Auto Modulation Index Setting</system:String>
 
     <system:String x:Key="MainWindow.Message.File.Save.Ok.Title">Great</system:String>
     <system:String x:Key="MainWindow.Message.File.Save.Ok.Message">Saved</system:String>
@@ -136,7 +140,6 @@
     <system:String x:Key="MainWindow.Message.Generate.Image.FFT.Original.EnterFrequency">Enter the frequency to render</system:String>
     <system:String x:Key="MainWindow.Message.Tools.AutoVoltage.Error">
         Check the following when using Auto Modulation Index.\n
-        ・Accelerate and brake patterns have to consist of more than two patterns.\n
         ・All patterns' From values must be greater than or equal to 0.
     </system:String>
 
@@ -187,8 +190,11 @@
 
     <system:String x:Key="TrainAudio.SettingWindow.Menu.File">File</system:String>
     <system:String x:Key="TrainAudio.SettingWindow.Menu.File.Save">Save</system:String>
+    <system:String x:Key="TrainAudio.SettingWindow.Menu.File.Save.InputGesture">Ctrl+S</system:String>
     <system:String x:Key="TrainAudio.SettingWindow.Menu.File.SaveAs">Save As</system:String>
+    <system:String x:Key="TrainAudio.SettingWindow.Menu.File.SaveAs.InputGesture">Ctrl+Shift+S</system:String>
     <system:String x:Key="TrainAudio.SettingWindow.Menu.File.Open">Open</system:String>
+    <system:String x:Key="TrainAudio.SettingWindow.Menu.File.Open.InputGesture">Ctrl+O</system:String>
     <system:String x:Key="TrainAudio.SettingWindow.Menu.Parameter">Parameter</system:String>
     <system:String x:Key="TrainAudio.SettingWindow.Menu.Parameter.Motor">Motor</system:String>
     <system:String x:Key="TrainAudio.SettingWindow.Menu.Parameter.Gear">Gear</system:String>
@@ -361,8 +367,11 @@
     <system:String x:Key="BaseFrequency.SettingWindow.Title">Generation Base Frequency Editor</system:String>
     <system:String x:Key="BaseFrequency.SettingWindow.Menu.File">File</system:String>
     <system:String x:Key="BaseFrequency.SettingWindow.Menu.File.Save">Save</system:String>
+    <system:String x:Key="BaseFrequency.SettingWindow.Menu.File.Save.InputGesture">Ctrl+S</system:String>
     <system:String x:Key="BaseFrequency.SettingWindow.Menu.File.SaveAs">Save As</system:String>
-    <system:String x:Key="BaseFrequency.SettingWindow.Menu.File.Load">Open</system:String>
+    <system:String x:Key="BaseFrequency.SettingWindow.Menu.File.SaveAs.InputGesture">Ctrl+Shift+S</system:String>
+    <system:String x:Key="BaseFrequency.SettingWindow.Menu.File.Open">Open</system:String>
+    <system:String x:Key="BaseFrequency.SettingWindow.Menu.File.Open.InputGesture">Ctrl+O</system:String>
     <system:String x:Key="BaseFrequency.SettingWindow.Menu.Edit">Edit</system:String>
     <system:String x:Key="BaseFrequency.SettingWindow.Menu.Edit.Reset">Reset</system:String>
     <system:String x:Key="BaseFrequency.SettingWindow.Menu.Edit.Midi">Load MIDI</system:String>
@@ -380,7 +389,7 @@
     <system:String x:Key="BaseFrequency.SettingWindow.Message.File.SaveAs.Error.Message">Failed to save</system:String>
     <system:String x:Key="BaseFrequency.SettingWindow.Message.File.SaveBefore.Load.Title">Confirm</system:String>
     <system:String x:Key="BaseFrequency.SettingWindow.Message.File.SaveBefore.Load.Message">The current content has not been saved. Do you want to save before opening another file?</system:String>
-    <system:String x:Key="BaseFrequency.SettingWindow.SettingWindow.Message.File.SaveBefore.Close.Title">Confirm</system:String>
+    <system:String x:Key="BaseFrequency.SettingWindow.Message.File.SaveBefore.Close.Title">Confirm</system:String>
     <system:String x:Key="BaseFrequency.SettingWindow.Message.File.SaveBefore.Close.Message">The current content has not been saved. Do you want to save before exiting?</system:String>
     <system:String x:Key="BaseFrequency.SettingWindow.Message.Edit.Reset.Confirm.Title">Confirm</system:String>
     <system:String x:Key="BaseFrequency.SettingWindow.Message.Edit.Reset.Confirm.Message">Are you sure you want to continue?</system:String>

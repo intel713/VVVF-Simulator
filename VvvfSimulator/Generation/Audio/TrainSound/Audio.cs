@@ -3,13 +3,12 @@ using NAudio.Wave.SampleProviders;
 using System;
 using System.Collections.Generic;
 using System.IO;
-using VvvfSimulator.Vvvf.Calculation;
 using VvvfSimulator.Data.BaseFrequency;
+using VvvfSimulator.Vvvf.Calculation;
+using static VvvfSimulator.Data.TrainAudio.Struct;
 using static VvvfSimulator.Generation.Audio.TrainSound.AudioFilter;
 using static VvvfSimulator.Generation.GenerateCommon;
-using static VvvfSimulator.Generation.GenerateCommon.GenerationParameter;
 using static VvvfSimulator.Vvvf.Model.Struct;
-using static VvvfSimulator.Data.TrainAudio.Struct;
 
 namespace VvvfSimulator.Generation.Audio.TrainSound
 {
@@ -89,7 +88,7 @@ namespace VvvfSimulator.Generation.Audio.TrainSound
             Data.Vvvf.Struct vvvfData = Parameter.VvvfData;
             Data.TrainAudio.Struct soundData = Parameter.TrainData;
             StructCompiled baseFreqData = Parameter.BaseFrequencyData;
-            ProgressData progressData = Parameter.Progress;
+            GUI.TaskViewer.TaskProgress progressData = Parameter.Progress;
 
             Domain Domain = new(soundData.MotorSpec);
 

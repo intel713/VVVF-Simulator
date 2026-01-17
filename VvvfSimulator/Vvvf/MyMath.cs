@@ -78,8 +78,7 @@ namespace VvvfSimulator.Vvvf
                         double pre_x = x;
                         x = GetZeroIntersect(x);
                         if (pre_x == x || double.IsNaN(x) || double.IsInfinity(x)) x = pre_x + dx;
-                        double fx = Math.Abs(function(x));
-                        if (fx < tolerance) return x;
+                        if (Math.Abs(x - pre_x) < tolerance) return x;
                     }
                     return x;
                 }
@@ -113,7 +112,7 @@ namespace VvvfSimulator.Vvvf
                         double YA = function(XA);
                         if (function(X0) * YA < 0) X1 = XA;
                         else X0 = XA;
-                        if (Math.Abs(YA) < Tolerance) return XA;
+                        if (Math.Abs(X1 - X0) < Tolerance) return XA;
                     }
                     return XA;
                 }

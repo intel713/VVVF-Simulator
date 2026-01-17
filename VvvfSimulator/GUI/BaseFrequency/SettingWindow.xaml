@@ -47,9 +47,9 @@
             <Image Style="{StaticResource WindowIconStyle}"/>
             <Menu Grid.Column="1" Style="{DynamicResource MenuStyle}">
                 <MenuItem Header="{DynamicResource BaseFrequency.SettingWindow.Menu.File}">
-                    <MenuItem Header="{DynamicResource BaseFrequency.SettingWindow.Menu.File.Save}" Tag="Save" Click="FileMenuClick"/>
-                    <MenuItem Header="{DynamicResource BaseFrequency.SettingWindow.Menu.File.SaveAs}" Tag="SaveAs" Click="FileMenuClick"/>
-                    <MenuItem Header="{DynamicResource BaseFrequency.SettingWindow.Menu.File.Load}" Tag="Load" Click="FileMenuClick"/>
+                    <MenuItem Header="{DynamicResource BaseFrequency.SettingWindow.Menu.File.Save}" Tag="Save" Click="FileMenuClick" InputGestureText="{DynamicResource BaseFrequency.SettingWindow.Menu.File.Save.InputGesture}"/>
+                    <MenuItem Header="{DynamicResource BaseFrequency.SettingWindow.Menu.File.SaveAs}" Tag="SaveAs" Click="FileMenuClick" InputGestureText="{DynamicResource BaseFrequency.SettingWindow.Menu.File.SaveAs.InputGesture}"/>
+                    <MenuItem Header="{DynamicResource BaseFrequency.SettingWindow.Menu.File.Open}" Tag="Load" Click="FileMenuClick" InputGestureText="{DynamicResource BaseFrequency.SettingWindow.Menu.File.Open.InputGesture}"/>
                 </MenuItem>
                 <MenuItem Header="{DynamicResource BaseFrequency.SettingWindow.Menu.Edit}">
                     <MenuItem Header="{DynamicResource BaseFrequency.SettingWindow.Menu.Edit.Reset}" Tag="Reset" Click="EditMenuClick"/>

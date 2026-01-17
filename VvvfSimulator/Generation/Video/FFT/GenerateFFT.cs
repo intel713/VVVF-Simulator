@@ -4,11 +4,10 @@ using System;
 using System.Drawing;
 using System.Drawing.Imaging;
 using System.IO;
+using VvvfSimulator.Data.BaseFrequency;
 using VvvfSimulator.GUI.Util;
 using VvvfSimulator.Vvvf;
-using VvvfSimulator.Data.BaseFrequency;
 using static VvvfSimulator.Generation.GenerateCommon;
-using static VvvfSimulator.Generation.GenerateCommon.GenerationParameter;
 using static VvvfSimulator.Vvvf.Model.Struct;
 
 namespace VvvfSimulator.Generation.Video.FFT
@@ -75,7 +74,7 @@ namespace VvvfSimulator.Generation.Video.FFT
 
             Data.Vvvf.Struct vvvfData = Parameter.VvvfData;
             StructCompiled baseFreqData = Parameter.BaseFrequencyData;
-            ProgressData progressData = Parameter.Progress;
+            GUI.TaskViewer.TaskProgress progressData = Parameter.Progress;
 
             Domain Domain = new(Parameter.TrainData.MotorSpec);
             Domain.GetCarrierInstance().UseSimpleFrequency = true;

@@ -32,29 +32,12 @@ namespace VvvfSimulator.Generation
             Data.BaseFrequency.StructCompiled BaseFrequencyData, 
             Data.Vvvf.Struct VvvfData, 
             Data.TrainAudio.Struct TrainData,
-            GenerationParameter.ProgressData Progress)
+            GUI.TaskViewer.TaskProgress Progress)
         {
             public Data.BaseFrequency.StructCompiled BaseFrequencyData { get; set; } = BaseFrequencyData;
             public Data.Vvvf.Struct VvvfData { get; set; } = VvvfData;
             public Data.TrainAudio.Struct TrainData { get; set; } = TrainData;
-            public ProgressData Progress { get; set; } = Progress;
-
-            public class ProgressData
-            {
-                public double Progress = 1;
-                public double Total = 1;
-
-                public double RelativeProgress
-                {
-                    get
-                    {
-                        return Progress / Total * 100;
-                    }
-                }
-
-                public bool Cancel = false;
-            }
-
+            public GUI.TaskViewer.TaskProgress Progress { get; set; } = Progress;
         }
 
     }
