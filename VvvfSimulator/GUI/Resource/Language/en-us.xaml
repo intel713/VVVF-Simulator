@@ -506,6 +506,7 @@
     <system:String x:Key="Resource.Language.FriendlyNameConverter.PulseDataSetting.Key.Name.PulseWidth">Pulse Width</system:String>
     <system:String x:Key="Resource.Language.FriendlyNameConverter.PulseDataSetting.Key.Name.Phase">Phase</system:String>
     <system:String x:Key="Resource.Language.FriendlyNameConverter.PulseDataSetting.Key.Name.UpdateFrequency">Frequency</system:String>
+    <system:String x:Key="Resource.Language.FriendlyNameConverter.PulseDataSetting.Key.Name.CarrierFolding">Carrier Folding</system:String>
 
     <system:String x:Key="Resource.Language.FriendlyNameConverter.ControlMovingSetting.MoveType.Name.Proportional">Proportional</system:String>
     <system:String x:Key="Resource.Language.FriendlyNameConverter.ControlMovingSetting.MoveType.Name.InvProportional">Inverse Proportional</system:String>
@@ -536,11 +537,11 @@
     <system:String x:Key="Resource.Language.FriendlyNameConverter.AmplitudeMode.Name.Table">Discrete Points</system:String>
 
     <system:String x:Key="Resource.Language.FriendlyNameConverter.BaseWaveType.Name.Sine">Sinusoidal</system:String>
-    <system:String x:Key="Resource.Language.FriendlyNameConverter.BaseWaveType.Name.Saw">Triangle</system:String>
+    <system:String x:Key="Resource.Language.FriendlyNameConverter.BaseWaveType.Name.Triangle">Triangle</system:String>
     <system:String x:Key="Resource.Language.FriendlyNameConverter.BaseWaveType.Name.Square">Square</system:String>
     <system:String x:Key="Resource.Language.FriendlyNameConverter.BaseWaveType.Name.ModifiedSine1">Modified Sinusoidal 1</system:String>
     <system:String x:Key="Resource.Language.FriendlyNameConverter.BaseWaveType.Name.ModifiedSine2">Modified Sinusoidal 2</system:String>
-    <system:String x:Key="Resource.Language.FriendlyNameConverter.BaseWaveType.Name.ModifiedSaw1">Modified Triangle</system:String>
+    <system:String x:Key="Resource.Language.FriendlyNameConverter.BaseWaveType.Name.ModifiedTriangle1">Modified Triangle</system:String>
     <system:String x:Key="Resource.Language.FriendlyNameConverter.BaseWaveType.Name.SV">Space Vector</system:String>
     <system:String x:Key="Resource.Language.FriendlyNameConverter.BaseWaveType.Name.DPWM30">30 DPWM</system:String>
     <system:String x:Key="Resource.Language.FriendlyNameConverter.BaseWaveType.Name.DPWM60C">60 DPWM Center</system:String>
@@ -559,6 +560,7 @@
 
     <system:String x:Key="Resource.Language.FriendlyNameConverter.PulseAlternative.Name.Default">Default</system:String>
     <system:String x:Key="Resource.Language.FriendlyNameConverter.PulseAlternative.Name.CP">Center Pulse</system:String>
+    <system:String x:Key="Resource.Language.FriendlyNameConverter.PulseAlternative.Name.ShiftedCP">Shifted Center Pulse</system:String>
     <system:String x:Key="Resource.Language.FriendlyNameConverter.PulseAlternative.Name.Square">Square</system:String>
     <system:String x:Key="Resource.Language.FriendlyNameConverter.PulseAlternative.Name.Alt">Alternate</system:String>
 
@@ -571,8 +573,9 @@
     <system:String x:Key="Resource.Language.FriendlyNameConverter.PulseModeName.Name.Pulse">Pulse</system:String>
 
     <system:String x:Key="Resource.Language.FriendlyNameConverter.PulseHarmonicType.Name.Sine">Sinusoidal</system:String>
-    <system:String x:Key="Resource.Language.FriendlyNameConverter.PulseHarmonicType.Name.Saw">Triangle</system:String>
+    <system:String x:Key="Resource.Language.FriendlyNameConverter.PulseHarmonicType.Name.Triangle">Triangle</system:String>
     <system:String x:Key="Resource.Language.FriendlyNameConverter.PulseHarmonicType.Name.Square">Square</system:String>
+    <system:String x:Key="Resource.Language.FriendlyNameConverter.PulseHarmonicType.Name.HFI">HFI</system:String>
 
     <system:String x:Key="Resource.Language.FriendlyNameConverter.DiscreteTimeMode.Name.Left">Left</system:String>
     <system:String x:Key="Resource.Language.FriendlyNameConverter.DiscreteTimeMode.Name.Middle">Middle</system:String>

@@ -1,4 +1,5 @@
-﻿using VvvfSimulator.Vvvf.Modulation;
+﻿using System;
+using VvvfSimulator.Vvvf.Modulation;
 using static VvvfSimulator.Data.Vvvf.Struct.PulseControl.Pulse;
 using static VvvfSimulator.Vvvf.Model.Struct;
 using static VvvfSimulator.Vvvf.MyMath;
@@ -19,9 +20,9 @@ namespace VvvfSimulator.Vvvf.Calculation
             CarrierVal *= (Dipolar != -1 ? Dipolar : 0.5);
 
             return new(
-                Modulate(Common.GetBaseWaveform(Domain, 0, InitialPhase), CarrierVal),
-                Modulate(Common.GetBaseWaveform(Domain, 1, InitialPhase), CarrierVal),
-                Modulate(Common.GetBaseWaveform(Domain, 2, InitialPhase), CarrierVal)
+                Modulate(Common.GetBaseWaveform(Domain, 0, InitialPhase, Domain.GetCarrierInstance().Phase), CarrierVal),
+                Modulate(Common.GetBaseWaveform(Domain, 1, InitialPhase, Domain.GetCarrierInstance().Phase), CarrierVal),
+                Modulate(Common.GetBaseWaveform(Domain, 2, InitialPhase, Domain.GetCarrierInstance().Phase), CarrierVal)
             );
         }
         
@@ -66,12 +67,32 @@ namespace VvvfSimulator.Vvvf.Calculation
                     _ => 2 - _GetPwm(M_PI_2 - Quater)
                 };
             }
+            else if (Domain.ElectricalState.PulsePattern.PulseMode.PulseCount == 5 && Domain.ElectricalState.PulsePattern.PulseMode.Alternative == PulseAlternative.Alt2)
+            {
+                double x = X % M_2PI;
+                int Orthant = (int)(x / (M_PI_2)) % 4;
+
+                int _GetPwm(double t, double a)
+                {
+                    if (M_PI_6 * Math.Abs(a - 0.5) <= t && t < M_PI_12) return 1;
+                    else if (M_PI_2 - 5 * M_PI_12 * a <= t && t < M_PI_2) return 1;
+                    else return 0;
+                }
+
+                return 1 + Orthant switch
+                {
+                    0 => _GetPwm(x, (double)Domain.ElectricalState.BaseWaveAmplitude),
+                    1 => _GetPwm(M_PI - x, (double)Domain.ElectricalState.BaseWaveAmplitude),
+                    2 => -_GetPwm(x - M_PI, (double)Domain.ElectricalState.BaseWaveAmplitude),
+                    _ => -_GetPwm(M_2PI - x, (double)Domain.ElectricalState.BaseWaveAmplitude)
+                };
+            }
 
             { // nP DEFAULT
                 Domain.GetCarrierInstance().AngleFrequency = Domain.ElectricalState.BaseWaveAngleFrequency;
                 Domain.GetCarrierInstance().Time = Domain.GetBaseWaveTime();
 
-                double SineVal = Common.GetBaseWaveform(Domain, Phase, InitialPhase);
+                double SineVal = Common.GetBaseWaveform(Domain, Phase, InitialPhase, 0);
                 double CarrierVal = Common.GetCarrierWaveform(Domain, Domain.ElectricalState.PulsePattern.PulseMode.PulseCount * RawX);
 
                 double Dipolar = Common.GetPulseDataValue(Domain.ElectricalState.PulseData, PulseDataKey.Dipolar);

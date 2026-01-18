@@ -506,6 +506,7 @@
     <system:String x:Key="Resource.Language.FriendlyNameConverter.PulseDataSetting.Key.Name.PulseWidth">脉冲宽度</system:String>
     <system:String x:Key="Resource.Language.FriendlyNameConverter.PulseDataSetting.Key.Name.Phase">相位</system:String>
     <system:String x:Key="Resource.Language.FriendlyNameConverter.PulseDataSetting.Key.Name.UpdateFrequency">频率</system:String>
+    <system:String x:Key="Resource.Language.FriendlyNameConverter.PulseDataSetting.Key.Name.CarrierFolding">调制载波折叠</system:String>
     
     <system:String x:Key="Resource.Language.FriendlyNameConverter.ControlMovingSetting.MoveType.Name.Proportional">线性</system:String>
     <system:String x:Key="Resource.Language.FriendlyNameConverter.ControlMovingSetting.MoveType.Name.InvProportional">反比例</system:String>
@@ -536,11 +537,11 @@
     <system:String x:Key="Resource.Language.FriendlyNameConverter.AmplitudeMode.Name.Table">离散点</system:String>
 
     <system:String x:Key="Resource.Language.FriendlyNameConverter.BaseWaveType.Name.Sine">正弦波</system:String>
-    <system:String x:Key="Resource.Language.FriendlyNameConverter.BaseWaveType.Name.Saw">三角波</system:String>
+    <system:String x:Key="Resource.Language.FriendlyNameConverter.BaseWaveType.Name.Triangle">三角波</system:String>
     <system:String x:Key="Resource.Language.FriendlyNameConverter.BaseWaveType.Name.Square">方波</system:String>
     <system:String x:Key="Resource.Language.FriendlyNameConverter.BaseWaveType.Name.ModifiedSine1">改进型正弦波-1</system:String>
     <system:String x:Key="Resource.Language.FriendlyNameConverter.BaseWaveType.Name.ModifiedSine2">改进型正弦波-2</system:String>
-    <system:String x:Key="Resource.Language.FriendlyNameConverter.BaseWaveType.Name.ModifiedSaw1">改进型三角波</system:String>
+    <system:String x:Key="Resource.Language.FriendlyNameConverter.BaseWaveType.Name.ModifiedTriangle1">改进型三角波</system:String>
     <system:String x:Key="Resource.Language.FriendlyNameConverter.BaseWaveType.Name.SV">空间矢量</system:String>
     <system:String x:Key="Resource.Language.FriendlyNameConverter.BaseWaveType.Name.DPWM30">30度不连续脉宽调制</system:String>
     <system:String x:Key="Resource.Language.FriendlyNameConverter.BaseWaveType.Name.DPWM60C">60度不连续脉宽调制（中心）</system:String>
@@ -559,6 +560,7 @@
 
     <system:String x:Key="Resource.Language.FriendlyNameConverter.PulseAlternative.Name.Default">默认</system:String>
     <system:String x:Key="Resource.Language.FriendlyNameConverter.PulseAlternative.Name.CP">中心脉冲</system:String>
+    <system:String x:Key="Resource.Language.FriendlyNameConverter.PulseAlternative.Name.ShiftedCP">反相中心脉冲</system:String>
     <system:String x:Key="Resource.Language.FriendlyNameConverter.PulseAlternative.Name.Square">方波</system:String>
     <system:String x:Key="Resource.Language.FriendlyNameConverter.PulseAlternative.Name.Alt">特殊类型</system:String>
 
@@ -571,8 +573,9 @@
     <system:String x:Key="Resource.Language.FriendlyNameConverter.PulseModeName.Name.Pulse">分频</system:String>
 
     <system:String x:Key="Resource.Language.FriendlyNameConverter.PulseHarmonicType.Name.Sine">正弦波</system:String>
-    <system:String x:Key="Resource.Language.FriendlyNameConverter.PulseHarmonicType.Name.Saw">三角波</system:String>
+    <system:String x:Key="Resource.Language.FriendlyNameConverter.PulseHarmonicType.Name.Triangle">三角波</system:String>
     <system:String x:Key="Resource.Language.FriendlyNameConverter.PulseHarmonicType.Name.Square">方波</system:String>
+    <system:String x:Key="Resource.Language.FriendlyNameConverter.PulseHarmonicType.Name.HFI">高频叠加</system:String>
 
     <system:String x:Key="Resource.Language.FriendlyNameConverter.DiscreteTimeMode.Name.Left">靠左</system:String>
     <system:String x:Key="Resource.Language.FriendlyNameConverter.DiscreteTimeMode.Name.Middle">居中</system:String>

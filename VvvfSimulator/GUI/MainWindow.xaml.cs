@@ -207,13 +207,13 @@ namespace VvvfSimulator
                 {
                     var dialog = new SaveFileDialog
                     {
-                        Filter = "normal(192k)|*.wav|normal(5M)|*.wav|raw(192k)|*.wav|raw(5M)|*.wav",
+                        Filter = "raw(192k)|*.wav|raw(5M)|*.wav|normal(192k)|*.wav|normal(5M)|*.wav",
                         FilterIndex = 1
                     };
                     if (dialog.ShowDialog() == false) return true;
 
                     int sample_freq = new int[] { 192000, 5000000, 192000, 5000000 }[dialog.FilterIndex - 1];
-                    bool raw = new bool[] { false, false, true, true }[dialog.FilterIndex - 1];
+                    bool raw = new bool[] { true, true, false, false }[dialog.FilterIndex - 1];
 
                     GenerationParameter parameter = GetGenerationBasicParameter();
 

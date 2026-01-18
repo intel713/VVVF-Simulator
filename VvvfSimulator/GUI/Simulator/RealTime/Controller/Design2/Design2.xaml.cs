@@ -146,6 +146,7 @@ namespace VvvfSimulator.GUI.Simulator.RealTime.Controller.Design2
                         }
                     }
 
+                    // PhaseState[] Pwm = Control.ElectricalState.BaseWaveFrequency >= 10 ? GenerateBasic.WaveForm.GetUVWCycle(Control, InitialPhase, CalculatePrecision, false) : [new(0, 0, 0)];
                     PhaseState[] Pwm = GenerateBasic.WaveForm.GetUVWCycle(Control, InitialPhase, CalculatePrecision, false);
 
                     double voltage = GenerateBasic.Fourier.GetVoltageRate(ref Pwm) * 100;

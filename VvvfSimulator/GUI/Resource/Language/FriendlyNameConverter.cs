@@ -236,6 +236,7 @@ namespace VvvfSimulator.GUI.Resource.Language
             {
                 Data.Vvvf.Struct.PulseControl.Pulse.PulseAlternative.Default => LanguageManager.GetString("Resource.Language.FriendlyNameConverter.PulseAlternative.Name.Default"),
                 Data.Vvvf.Struct.PulseControl.Pulse.PulseAlternative.CP => LanguageManager.GetString("Resource.Language.FriendlyNameConverter.PulseAlternative.Name.CP"),
+                Data.Vvvf.Struct.PulseControl.Pulse.PulseAlternative.ShiftedCP => LanguageManager.GetString("Resource.Language.FriendlyNameConverter.PulseAlternative.Name.ShiftedCP"),
                 Data.Vvvf.Struct.PulseControl.Pulse.PulseAlternative.Square => LanguageManager.GetString("Resource.Language.FriendlyNameConverter.PulseAlternative.Name.Square"),
                 _ => LanguageManager.GetString("Resource.Language.FriendlyNameConverter.PulseAlternative.Name.Alt") + ((int)Mode - (int)Data.Vvvf.Struct.PulseControl.Pulse.PulseAlternative.Alt1 + 1),
             };
@@ -298,8 +299,9 @@ namespace VvvfSimulator.GUI.Resource.Language
             return Type switch
             {
                 Data.Vvvf.Struct.PulseControl.Pulse.PulseHarmonic.PulseHarmonicType.Sine => LanguageManager.GetString("Resource.Language.FriendlyNameConverter.PulseHarmonicType.Name.Sine"),
-                Data.Vvvf.Struct.PulseControl.Pulse.PulseHarmonic.PulseHarmonicType.Saw => LanguageManager.GetString("Resource.Language.FriendlyNameConverter.PulseHarmonicType.Name.Saw"),
-                _ => LanguageManager.GetString("Resource.Language.FriendlyNameConverter.PulseHarmonicType.Name.Square"),
+                Data.Vvvf.Struct.PulseControl.Pulse.PulseHarmonic.PulseHarmonicType.Triangle => LanguageManager.GetString("Resource.Language.FriendlyNameConverter.PulseHarmonicType.Name.Triangle"),
+                Data.Vvvf.Struct.PulseControl.Pulse.PulseHarmonic.PulseHarmonicType.Square => LanguageManager.GetString("Resource.Language.FriendlyNameConverter.PulseHarmonicType.Name.Square"),
+                _ => LanguageManager.GetString("Resource.Language.FriendlyNameConverter.PulseHarmonicType.Name.HFI"),
             };
         }
 

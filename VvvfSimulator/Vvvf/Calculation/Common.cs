@@ -45,7 +45,7 @@ namespace VvvfSimulator.Vvvf.Calculation
 
             return (SineX, RawX);
         }
-        public static double GetBaseWaveform(Domain Control, int Phase, double InitialPhase)
+        public static double GetBaseWaveform(Domain Control, int Phase, double InitialPhase, double CarrierPhase)
         {
             if (Control.ElectricalState.IsNone) return 0;
 
@@ -150,7 +150,7 @@ namespace VvvfSimulator.Vvvf.Calculation
             {
                 double X = GetBaseWaveParameter(Control, Phase, InitialPhase).X;
                 double GetModifiedSine(double X, int Level) => Math.Round(Sine(X) * Level) / Level;
-                double GetModifiedSaw(double X)
+                double GetModifiedTriangle(double X)
                 {
                     double Y = Triangle(X) * M_PI_2;
                     if (Math.Abs(Y) > 0.5) Y = Y > 0 ? 1 : -1;
@@ -159,11 +159,11 @@ namespace VvvfSimulator.Vvvf.Calculation
                 double BaseWave = (double)(Control.ElectricalState.BaseWaveAmplitude * Control.ElectricalState.PulsePattern.PulseMode.BaseWave switch
                 {
                     BaseWaveType.Sine => Sine(X),
-                    BaseWaveType.Saw => Triangle(X),
+                    BaseWaveType.Triangle => Triangle(X),
                     BaseWaveType.Square => Square(X),
                     BaseWaveType.ModifiedSine1 => GetModifiedSine(X, 1),
                     BaseWaveType.ModifiedSine2 => GetModifiedSine(X, 2),
-                    BaseWaveType.ModifiedSaw1 => GetModifiedSaw(X),
+                    BaseWaveType.ModifiedTriangle1 => GetModifiedTriangle(X),
                     _ => 0
                 });
 
@@ -179,8 +179,13 @@ namespace VvvfSimulator.Vvvf.Calculation
                     HarmonicWave += (double)(HarmonicData.Type switch
                     {
                         PulseHarmonic.PulseHarmonicType.Sine => Sine(HarmonicX),
-                        PulseHarmonic.PulseHarmonicType.Saw => Triangle(HarmonicX),
+                        PulseHarmonic.PulseHarmonicType.Triangle => Triangle(HarmonicX),
                         PulseHarmonic.PulseHarmonicType.Square => Square(HarmonicX),
+                        PulseHarmonic.PulseHarmonicType.HFI => HarmonicData.IsHarmonicProportional switch
+                    {
+                        true => Sine(X) * Math.Sign(Sine(CarrierPhase + M_PI_3 + HarmonicData.InitialPhase)),
+                        false => Sine(X) * Math.Sign(Sine(HarmonicX + M_PI_3)),
+                    },
                         _ => 0,
                     } * HarmonicData.Amplitude * (HarmonicData.IsAmplitudeProportional ? Control.ElectricalState.BaseWaveAmplitude : 1));
                 }

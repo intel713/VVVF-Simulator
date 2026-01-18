@@ -171,7 +171,7 @@ namespace VvvfSimulator.Data.Vvvf
                 public PulseAlternative Alternative { get; set; } = PulseAlternative.Default;
                 public enum PulseAlternative
                 {
-                    Default, CP, Square,
+                    Default, CP, ShiftedCP, Square,
                     Alt1, Alt2, Alt3, Alt4, Alt5, Alt6, Alt7, Alt8, Alt9, Alt10,
                     Alt11, Alt12, Alt13, Alt14, Alt15, Alt16, Alt17, Alt18, Alt19, Alt20,
                     Alt21, Alt22, Alt23, Alt24, Alt25, Alt26, Alt27, Alt28, Alt29, Alt30,
@@ -207,7 +207,7 @@ namespace VvvfSimulator.Data.Vvvf
                 public BaseWaveType BaseWave { get; set; } = BaseWaveType.Sine;
                 public enum BaseWaveType
                 {
-                    Sine, Saw, Square, ModifiedSine1, ModifiedSine2, ModifiedSaw1, SV, DPWM30, DPWM60C, DPWM60P, DPWM60N, DPWM120P, DPWM120N
+                    Sine, Triangle, Square, ModifiedSine1, ModifiedSine2, ModifiedTriangle1, SV, DPWM30, DPWM60C, DPWM60P, DPWM60N, DPWM120P, DPWM120N
                 }
 
                 //
@@ -233,7 +233,7 @@ namespace VvvfSimulator.Data.Vvvf
 
                     public enum PulseHarmonicType
                     {
-                        Sine, Saw, Square
+                        Sine, Triangle, Square, HFI
                     }
                 }
 
@@ -271,7 +271,7 @@ namespace VvvfSimulator.Data.Vvvf
                 public Dictionary<PulseDataKey, PulseDataValue> PulseData { get; set; } = [];
                 public enum PulseDataKey
                 {
-                    Dipolar, PulseWidth, Phase, UpdateFrequency
+                    Dipolar, PulseWidth, Phase, UpdateFrequency, CarrierFolding
                 }
                 public class PulseDataValue
                 {

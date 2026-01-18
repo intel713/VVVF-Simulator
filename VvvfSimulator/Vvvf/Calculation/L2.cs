@@ -3,6 +3,7 @@ using VvvfSimulator.Vvvf.Modulation;
 using static VvvfSimulator.Data.Vvvf.Struct.PulseControl.Pulse;
 using static VvvfSimulator.Vvvf.Model.Struct;
 using static VvvfSimulator.Vvvf.MyMath;
+using static VvvfSimulator.Vvvf.MyMath.Functions;
 
 namespace VvvfSimulator.Vvvf.Calculation
 {
@@ -12,10 +13,12 @@ namespace VvvfSimulator.Vvvf.Calculation
         {
             Domain.GetCarrierInstance().ProcessCarrierFrequency(Domain.GetTime(), Domain.ElectricalState);
             double CarrierVal = Common.GetCarrierWaveform(Domain, Domain.GetCarrierInstance().Phase);
+            CarrierVal = Triangle(CarrierVal * M_PI_2 * Common.GetPulseDataValue(Domain.ElectricalState.PulseData ?? new(), PulseDataKey.CarrierFolding));
+
             return new(
-                Common.ModulateSignal(Common.GetBaseWaveform(Domain, 0, InitialPhase), CarrierVal) * 2,
-                Common.ModulateSignal(Common.GetBaseWaveform(Domain, 1, InitialPhase), CarrierVal) * 2,
-                Common.ModulateSignal(Common.GetBaseWaveform(Domain, 2, InitialPhase), CarrierVal) * 2
+                Common.ModulateSignal(Common.GetBaseWaveform(Domain, 0, InitialPhase, Domain.GetCarrierInstance().Phase), CarrierVal) * 2,
+                Common.ModulateSignal(Common.GetBaseWaveform(Domain, 1, InitialPhase, Domain.GetCarrierInstance().Phase), CarrierVal) * 2,
+                Common.ModulateSignal(Common.GetBaseWaveform(Domain, 2, InitialPhase, Domain.GetCarrierInstance().Phase), CarrierVal) * 2
             );
         }
 
@@ -34,20 +37,63 @@ namespace VvvfSimulator.Vvvf.Calculation
                 return SineVal > 0 ? -AmpSign + 1 : AmpSign + 1;
             }
 
-            // SYNC 3 ALTERNATE 1
-            if (Domain.ElectricalState.PulsePattern.PulseMode.PulseCount == 3 && Domain.ElectricalState.PulsePattern.PulseMode.Alternative == PulseAlternative.Alt1)
+            // SYNC 3 ALTERNATE 1, 2, 3
+            if (Domain.ElectricalState.PulsePattern.PulseMode.PulseCount == 3)
             {
-                double SineVal = Functions.Sine(RawX);
-                double SawVal = -Functions.Triangle(RawX - Common.GetPulseDataValue(Domain.ElectricalState.PulseData, PulseDataKey.Phase) / 180.0 * M_PI);
-                double Pwm = (double)((SineVal > 0 ? 1 : -1) * (Domain.ElectricalState.BaseWaveAmplitude * 2 / 3.0 + 1 / 3.0));
-                double Negate = SawVal > 0 ? SawVal - 1 : SawVal + 1;
-                return Common.ModulateSignal(Pwm, Negate) * 2;
+                if (Domain.ElectricalState.PulsePattern.PulseMode.Alternative == PulseAlternative.Alt1)
+                {
+                    double SineVal = Functions.Sine(RawX);
+                    double SawVal = -Functions.Triangle(RawX - Common.GetPulseDataValue(Domain.ElectricalState.PulseData, PulseDataKey.Phase) / 180.0 * M_PI);
+                    double Pwm = (double)((SineVal > 0 ? 1 : -1) * (Domain.ElectricalState.BaseWaveAmplitude * 2 / 3.0 + 1 / 3.0));
+                    double Negate = SawVal > 0 ? SawVal - 1 : SawVal + 1;
+                    return Common.ModulateSignal(Pwm, Negate) * 2;
+                }
+
+                else if (Domain.ElectricalState.PulsePattern.PulseMode.Alternative == PulseAlternative.Alt2 || Domain.ElectricalState.PulsePattern.PulseMode.Alternative == PulseAlternative.Alt3)
+                {
+                    double SineVal = (double)Domain.ElectricalState.BaseWaveAmplitude * Square(Functions.Sine(RawX));
+                    double s = 1 - Common.GetPulseDataValue(Domain.ElectricalState.PulseData, PulseDataKey.PulseWidth);
+                    double x = RawX % M_2PI;
+                    int Orthant = (int)(x / M_PI_2) % 4;
+
+                    double _GetCarrier(double x, double s)
+                    {
+                        if (0 <= x && x < s * M_PI_6)
+                        {
+                            return -6 / (s * M_PI) * x;
+                        }
+                        else if (s * M_PI_6 <= x && x < s * M_PI_2)
+                        {
+                            return 6 / (s * M_PI) * (x - s * M_PI_6) - 1;
+                        }
+                        else if (s * M_PI_2 <= x && x < M_PI_2)
+                        {
+                            return 3 / ((s - 1) * M_PI) * (x - M_PI_2) - 0.5;
+                        }
+                        else
+                        {
+                            return 0;
+                        }
+                    }
+
+                    double SawVal = Orthant switch
+                    {
+                        0 => _GetCarrier(x, s),
+                        1 => _GetCarrier(M_PI - x, s),
+                        2 => -_GetCarrier(x - M_PI, s),
+                        _ => -_GetCarrier(M_2PI - x, s)
+                    };
+
+                    if (Domain.ElectricalState.PulsePattern.PulseMode.Alternative == PulseAlternative.Alt3)
+                        SawVal = -SawVal;
+                    return Common.ModulateSignal(SineVal, SawVal) * 2;
+                }
             }
 
             // SYNC 5 9 13 17 ALTERNATE 1
             if ((Domain.ElectricalState.PulsePattern.PulseMode.PulseCount == 5 || Domain.ElectricalState.PulsePattern.PulseMode.PulseCount == 9 || Domain.ElectricalState.PulsePattern.PulseMode.PulseCount == 13 || Domain.ElectricalState.PulsePattern.PulseMode.PulseCount == 17) && Domain.ElectricalState.PulsePattern.PulseMode.Alternative == PulseAlternative.Alt1)
             {
-                double SineVal = Common.GetBaseWaveform(Domain, Phase, InitialPhase);
+                double SineVal = Common.GetBaseWaveform(Domain, Phase, InitialPhase, 0);
                 double SawValue = -Functions.Triangle(27 * RawX);
                 double FixedX = (int)(RawX / M_PI_2) % 2 == 1 ? M_PI_2 - RawX % M_PI_2 : RawX % M_PI_2;
                 Domain.GetCarrierInstance().AngleFrequency = Domain.ElectricalState.BaseWaveAngleFrequency;
@@ -94,14 +140,31 @@ namespace VvvfSimulator.Vvvf.Calculation
             // SYNC N WITH CP CONFIGURATION
             if (Domain.ElectricalState.PulsePattern.PulseMode.Alternative == PulseAlternative.CP)
             {
-                double SineVal = Common.GetBaseWaveform(Domain, Phase, InitialPhase);
+                double SineVal = Common.GetBaseWaveform(Domain, Phase, InitialPhase, 0);
 
-                int CarrierFrequency = Domain.ElectricalState.PulsePattern.PulseMode.PulseCount / 2 * 6;
-                double SawVal = CarrierFrequency == 0 ? 0 : (-Functions.Triangle(CarrierFrequency * RawX + M_PI_2) * ((Domain.ElectricalState.PulsePattern.PulseMode.PulseCount % 2 == 1) ? 0.5 : -0.5) + 0.5);
-                double CycleX = RawX % M_2PI;
-                int Orthant = (int)((RawX % M_PI) / M_PI_3);
-                if (CycleX >= M_PI) SawVal = -SawVal;
-                if (Orthant != 1) SawVal = 0;
+                // int CarrierFrequency = Domain.ElectricalState.PulsePattern.PulseMode.PulseCount / 2 * 6;
+                // double SawVal = CarrierFrequency == 0 ? 0 : (-Functions.Triangle(CarrierFrequency * RawX + M_PI_2) * ((Domain.ElectricalState.PulsePattern.PulseMode.PulseCount % 2 == 1) ? 0.5 : -0.5) + 0.5);
+                // double CycleX = RawX % M_2PI;
+                // int Orthant = (int)((RawX % M_PI) / M_PI_3);
+                // if (CycleX >= M_PI) SawVal = -SawVal;
+                // if (Orthant != 1) SawVal = 0;
+
+                double N = 3 * (Domain.ElectricalState.PulsePattern.PulseMode.PulseCount - 1) / 2;
+                double SawVal = -Triangle(N * RawX) * Square(Sine(N * RawX)) * Square(Sine(3 * RawX));
+                SawVal = Triangle(SawVal * M_PI_2 * Common.GetPulseDataValue(Domain.ElectricalState.PulseData, PulseDataKey.CarrierFolding));
+
+                return Common.ModulateSignal(SineVal, SawVal) * 2;
+            }
+
+            // SYNC N WITH SHIFTED CP CONFIGURATION
+            if (Domain.ElectricalState.PulsePattern.PulseMode.Alternative == PulseAlternative.ShiftedCP)
+            {
+                double SineVal = Common.GetBaseWaveform(Domain, Phase, InitialPhase, 0);
+                int n = (Domain.ElectricalState.PulsePattern.PulseMode.PulseCount + 1) / 4;
+                double x = Domain.ElectricalState.BaseWaveAngleFrequency * Domain.GetBaseWaveTime() + InitialPhase;
+                double P = Square(Functions.Sine(3 * n * x)) * Square(Functions.Sine(3* x));
+                double SawVal = Triangle(3 * n * x) * P;
+                SawVal = Triangle(SawVal * M_PI_2 * Common.GetPulseDataValue(Domain.ElectricalState.PulseData, PulseDataKey.CarrierFolding));
 
                 return Common.ModulateSignal(SineVal, SawVal) * 2;
             }
@@ -109,16 +172,25 @@ namespace VvvfSimulator.Vvvf.Calculation
             // SYNC N WITH SQUARE CONFIGURATION
             if (Domain.ElectricalState.PulsePattern.PulseMode.Alternative == PulseAlternative.Square)
             {
-                int PulseCount = Domain.ElectricalState.PulsePattern.PulseMode.PulseCount;
-                PulseCount += PulseCount % 2 == 0 ? 0 : -1;
-                double CarrierVal = 0.5 * ((Domain.ElectricalState.PulsePattern.PulseMode.PulseCount % 2 == 0 ? 1 : -1) * Functions.Triangle(3 * PulseCount * RawX + M_PI_2) + 1);
-                return Common.ModulateSignal((double)(X % M_2PI < M_PI ? Domain.ElectricalState.BaseWaveAmplitude : -Domain.ElectricalState.BaseWaveAmplitude), CarrierVal) * 2;
+                // int PulseCount = Domain.ElectricalState.PulsePattern.PulseMode.PulseCount;
+                // PulseCount += PulseCount % 2 == 0 ? 0 : -1;
+                // double CarrierVal = 0.5 * ((Domain.ElectricalState.PulsePattern.PulseMode.PulseCount % 2 == 0 ? 1 : -1) * Functions.Triangle(3 * PulseCount * RawX + M_PI_2) + 1);
+                // CarrierVal = Triangle(CarrierVal * M_PI_2 * Common.GetPulseDataValue(Domain.ElectricalState.PulseData, PulseDataKey.CarrierFolding));
+                // return Common.ModulateSignal((double)(X % M_2PI < M_PI ? Domain.ElectricalState.BaseWaveAmplitude : -Domain.ElectricalState.BaseWaveAmplitude), CarrierVal) * 2;
+
+                int PulseCount = Domain.ElectricalState.PulsePattern.PulseMode.PulseCount % 2 == 0 ? (int)(Domain.ElectricalState.PulsePattern.PulseMode.PulseCount * 1.5) : (int)((Domain.ElectricalState.PulsePattern.PulseMode.PulseCount - 1) * 1.5);
+                double CarrierPhase = Domain.ElectricalState.PulsePattern.PulseMode.PulseCount % 2 == 0 ? M_PI_2 : 0;
+                double CarrierVal = -Triangle(PulseCount * RawX + CarrierPhase);
+                //if (Domain.ElectricalState.PulsePattern.PulseMode.Shift)
+                //    SawVal = -SawVal;
+                return Common.ModulateSignal(Sine(RawX) > 0 ? (double)Domain.ElectricalState.BaseWaveAmplitude : -(double)Domain.ElectricalState.BaseWaveAmplitude, CarrierVal) * 2;
             }
 
             // SYNC N
             {
-                double SineVal = Common.GetBaseWaveform(Domain, Phase, InitialPhase);
+                double SineVal = Common.GetBaseWaveform(Domain, Phase, InitialPhase, 0);
                 double CarrierVal = Common.GetCarrierWaveform(Domain, Domain.ElectricalState.PulsePattern.PulseMode.PulseCount * RawX);
+                CarrierVal = Triangle(CarrierVal * M_PI_2 * Common.GetPulseDataValue(Domain.ElectricalState.PulseData, PulseDataKey.CarrierFolding));
                 Domain.GetCarrierInstance().AngleFrequency = Domain.ElectricalState.BaseWaveAngleFrequency;
                 Domain.GetCarrierInstance().Time = Domain.GetBaseWaveTime();
                 return Common.ModulateSignal(SineVal, CarrierVal) * 2;
@@ -137,18 +209,43 @@ namespace VvvfSimulator.Vvvf.Calculation
         {
             if (Domain.ElectricalState.IsNone) return 0;
 
-            static int GetHo(double x, double amplitude, int carrier, int width)
+            static int GetHo(double x, double amplitude, int carrier, int width, double zerosw)
             {
-                int totalSteps = carrier * 2;
-                double fixed_x = x % M_PI / (M_PI / totalSteps);
+                double step = M_PI_2 / carrier;
+                double fixed_x = x % M_2PI;
                 double saw_value = Functions.Triangle(carrier * x);
                 double modulated;
-                if (fixed_x > totalSteps - 1) modulated = -1;
-                else if (fixed_x > totalSteps / 2 + width) modulated = 1;
-                else if (fixed_x > totalSteps / 2 - width) modulated = 2 * amplitude - 1;
-                else if (fixed_x > 1) modulated = 1;
-                else modulated = -1;
-                if (x % M_2PI > M_PI) modulated = -modulated;
+                int Orthant = (int)((fixed_x / M_PI_2) % 4);
+                double alpha = step * zerosw;
+                double beta = M_PI_2 - step * width;
+
+                double _GetSignal(double x)
+                {
+                    if (0 <= x && x < alpha)
+                    {
+                        return -1;
+                    }
+                    else if (alpha <= x && x < beta)
+                    {
+                        return 1;
+                    }
+                    else if (beta <= x && x < M_PI_2)
+                    {
+                        return 2 * amplitude - 1;
+                    }
+                    else
+                    {
+                        return 0;
+                    }
+                }
+
+                modulated = Orthant switch
+                {
+                    0 => _GetSignal(fixed_x),
+                    1 => _GetSignal(M_PI - fixed_x),
+                    2 => -_GetSignal(fixed_x - M_PI),
+                    _ => -_GetSignal(M_2PI - fixed_x)
+                };
                 return Common.ModulateSignal(modulated, saw_value);
             }
 
@@ -166,7 +263,8 @@ namespace VvvfSimulator.Vvvf.Calculation
             };
             int Index = (Domain.ElectricalState.PulsePattern.PulseMode.Alternative == PulseAlternative.Default || Domain.ElectricalState.PulsePattern.PulseMode.Alternative - PulseAlternative.Alt1 + 1 >= Keys.Length / 2) ?
                 0 : (Domain.ElectricalState.PulsePattern.PulseMode.Alternative - PulseAlternative.Alt1 + 1);
-            return GetHo(SineX, (double)Domain.ElectricalState.BaseWaveAmplitude, Keys[2 * Index], Keys[2 * Index + 1]) * 2;
+            double zeroswitching = Common.GetPulseDataValue(Domain.ElectricalState.PulseData, PulseDataKey.PulseWidth);
+            return GetHo(SineX, (double)Domain.ElectricalState.BaseWaveAmplitude, Keys[2 * Index], Keys[2 * Index + 1], zeroswitching) * 2;
         }
         private static PhaseState Ho(Domain Domain, double InitialPhase)
         {
@@ -203,7 +301,7 @@ namespace VvvfSimulator.Vvvf.Calculation
             DeltaSigma deltaSigma = Domain.GetDeltaSigmaInstance(Phase);
             deltaSigma.ResetIfLastTime(Domain.GetLastTime());
             deltaSigma.FeedbackInterval = 1.0 / Common.GetPulseDataValue(Domain.ElectricalState.PulseData, PulseDataKey.UpdateFrequency);
-            return deltaSigma.Process(Common.GetBaseWaveform(Domain, Phase, InitialPhase), Domain.GetTime()) * 2;
+            return deltaSigma.Process(Common.GetBaseWaveform(Domain, Phase, InitialPhase, 0), Domain.GetTime()) * 2;
         }
         private static PhaseState DeltaSigma(Domain Domain, double InitialPhase)
         {
