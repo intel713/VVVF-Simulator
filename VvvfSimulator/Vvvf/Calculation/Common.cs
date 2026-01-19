@@ -183,7 +183,7 @@ namespace VvvfSimulator.Vvvf.Calculation
                         PulseHarmonic.PulseHarmonicType.Square => Square(HarmonicX),
                         PulseHarmonic.PulseHarmonicType.HFI => HarmonicData.IsHarmonicProportional switch
                     {
-                        true => Sine(X) * Math.Sign(Sine(CarrierPhase + M_PI_3 + HarmonicData.InitialPhase)),
+                        true => Sine(X) * Math.Sign(Sine(CarrierPhase / HarmonicData.Harmonic + M_PI_3 + HarmonicData.InitialPhase)),
                         false => Sine(X) * Math.Sign(Sine(HarmonicX + M_PI_3)),
                     },
                         _ => 0,

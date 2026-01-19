@@ -1,7 +1,7 @@
 # This is a fork of the [VVVF-Simulator](https://github.com/VvvfGeeks/VVVF-Simulator)
 This fork currently supports experimental features like
 - Random Switching Modulation (To use this, enter any negative value in the `Range` section)
-- HFI and Random HFI (To use Random HFI, enable the `Harmonic Proportional` checkbox in the `Harmonic Settings` window)
+- HFI and Random HFI (To use Random HFI, enable the `Harmonic Proportional` checkbox or add the `RHFI` in the `Harmonic Settings` window)
 - Carrier Folding
 - New pulse modes:
   - 2-Level
@@ -16,7 +16,7 @@ And the following features are planned
 - Make options for selecting Random and Random SW
 - Constant async carrier frequency during jerk
 
-NOTE:Some features may be unstable.
+**NOTE**:Some features may be unstable.
 
 ---
 </br>
