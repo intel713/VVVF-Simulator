@@ -1,5 +1,8 @@
-﻿using System.IO.Ports;
+﻿using System;
+using System.IO.Ports;
 using static VvvfSimulator.Vvvf.Model.Struct;
+using static VvvfSimulator.Vvvf.MyMath;
+using VvvfSimulator.Configuration;
 
 namespace VvvfSimulator.Generation.Audio
 {
@@ -39,6 +42,8 @@ namespace VvvfSimulator.Generation.Audio
             double sin_new_angle_freq = Control.GetBaseWaveAngleFrequency();
             sin_new_angle_freq += Param.FrequencyChangeRate * dt;
             if (sin_new_angle_freq < 0) sin_new_angle_freq = 0;
+            if (RealTimeConfig.LimitMaxOutputFrequency && sin_new_angle_freq / M_2PI > RealTimeConfig.MaxOutputFrequency) sin_new_angle_freq = RealTimeConfig.MaxOutputFrequency * M_2PI;
+            if (RealTimeConfig.LimitMaxFrequencyChangeRate && Math.Abs((sin_new_angle_freq - Control.GetBaseWaveAngleFrequency()) / dt) > RealTimeConfig.MaxFrequencyChangeRate * M_2PI) sin_new_angle_freq = Control.GetBaseWaveAngleFrequency();
 
             if (!Control.IsFreeRun())
             {

@@ -102,7 +102,7 @@ namespace VvvfSimulator.Generation.Audio.VvvfSound
 
         private static void ExportWavFile(GenerationParameter Parameter, GetSampleDelegate GetSample, int SamplingFreq, bool UseRaw, string[] Path)
         {
-            const double VolumeFactor = 0.35;
+            const double VolumeFactor = 0.5;
             double dt = 1.0 / SamplingFreq;
             Parameter.Progress.Total = Parameter.BaseFrequencyData.GetEstimatedSteps(dt) * (UseRaw ? 1 : Math.Pow(1.05, Path.Length));
 

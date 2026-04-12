@@ -28,6 +28,7 @@ namespace VvvfSimulator.GUI.Simulator
             Version? version = Assembly.GetExecutingAssembly().GetName().Version;
             if (version == null) VersionLabel.Content = LanguageManager.GetString("MainWindow.Menu.Help.About.Version.Unkown");
             else VersionLabel.Content = "v" + version.ToString();
+            ForkLabel.Content = "Forked Version by 거북이(turtle713)";
         }
 
         private void OnWindowControlButtonClick(object sender, RoutedEventArgs e)

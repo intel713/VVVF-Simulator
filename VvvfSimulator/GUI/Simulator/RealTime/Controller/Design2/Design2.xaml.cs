@@ -7,6 +7,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
+using VvvfSimulator.Configuration;
 using VvvfSimulator.Generation;
 using VvvfSimulator.GUI.Resource.Class;
 using VvvfSimulator.GUI.Resource.Language;
@@ -146,7 +147,12 @@ namespace VvvfSimulator.GUI.Simulator.RealTime.Controller.Design2
                         }
                     }
 
-                    PhaseState[] Pwm = GenerateBasic.WaveForm.GetUVWCycle(Control, InitialPhase, CalculatePrecision, false);
+                    PhaseState[] Pwm;
+                    if (RealTimeConfig.LimitWaveformCalculation && Control.ElectricalState.BaseWaveFrequency > RealTimeConfig.WaveformCalculationFrequency)
+                    {
+                        Pwm = GenerateBasic.WaveForm.GetUVWCycle(Control, InitialPhase, CalculatePrecision, false);
+                    }
+                    else Pwm = [new(0, 0, 0)];
 
                     double voltage = GenerateBasic.Fourier.GetVoltageRate(ref Pwm) * 100;
                     Model.Voltage = Param.Control.ElectricalState.IsNone ? LanguageManager.GetString("Simulator.RealTime.Controller.Voltage.None") : voltage.ToString("F1");

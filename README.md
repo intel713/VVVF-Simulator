@@ -1,3 +1,28 @@
+# This is a fork of the [VVVF-Simulator](https://github.com/VvvfGeeks/VVVF-Simulator)
+This fork currently supports experimental features like
+- Random Switching Modulation (To use this, enter any negative value in the `Range` section)
+- HFI and Random HFI (To use Random HFI, enable the `Harmonic Proportional` checkbox or add the `RHFI` in the `Harmonic Settings` window)
+- Carrier Folding
+- New pulse modes:
+  - 2-Level
+    - Shifted Center Pulses (Only available with 4N+3 pulses)
+    - Sync 3 Alt2, Sync 3 Alt3
+  - 3-Level
+    - Sync 5 Alt3
+- Modified Center Pulse carrier
+- The default option for audio generation is `Raw`
+- Safety Options for Realtime VVVF-USB Passthrough (Only available in `Configuration.cs`)
+
+And the following features are planned
+- Make options for selecting Random and Random SW
+- Constant async carrier frequency during jerk
+- FS(Fourier Series) image generation
+
+**NOTE**:Some features may be unstable.
+
+---
+</br>
+
 # Language
 - English (Current language)
 - [日本語](README_JPN.md)

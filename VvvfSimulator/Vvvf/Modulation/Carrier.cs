@@ -148,8 +148,17 @@ namespace VvvfSimulator.Vvvf.Modulation
 
                 if (LastUpdateTime + Parameter.Interval < Time)
                 {
-                    double Range = RandomInstance.NextDouble() * Parameter.Range;
-                    if (RandomInstance.NextDouble() < 0.5) Range = -Range;
+                    double Range = 0;
+                    if (Parameter.Range >= 0)
+                    {
+                        Range = RandomInstance.NextDouble() * Parameter.Range;
+                        if (RandomInstance.NextDouble() < 0.5) Range = -Range;
+                    }
+                    else
+                    {
+                        if (RandomInstance.NextDouble() < 0.5) Range = Parameter.Range;
+                        else Range = -Parameter.Range;
+                    }
                     LastRange = Range;
                     LastUpdateTime = Time;
                 }

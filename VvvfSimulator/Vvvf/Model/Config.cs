@@ -73,7 +73,7 @@ namespace VvvfSimulator.Vvvf.Model
                     return PulseCount switch
                     {
                         1 => [PulseAlternative.Default, PulseAlternative.Alt1],
-                        5 => AlternativesDefaultToX(2, []),
+                        5 => AlternativesDefaultToX(3, []),
                         _ => [PulseAlternative.Default],
                     };
                 }
@@ -120,15 +120,17 @@ namespace VvvfSimulator.Vvvf.Model
                     return PulseCount switch
                     {
                         1 => AlternativesDefaultToX(2, []),
-                        3 => AlternativesDefaultToX(1, [PulseAlternative.CP, PulseAlternative.Square,]),
+                        3 => AlternativesDefaultToX(3, [PulseAlternative.CP, PulseAlternative.Square,]),
                         5 => AlternativesDefaultToX(1, [PulseAlternative.CP, PulseAlternative.Square,]),
                         6 => AlternativesDefaultToX(1, [PulseAlternative.CP, PulseAlternative.Square,]),
                         8 => AlternativesDefaultToX(1, [PulseAlternative.CP, PulseAlternative.Square,]),
                         9 => AlternativesDefaultToX(1, [PulseAlternative.CP, PulseAlternative.Square,]),
-                        11 => AlternativesDefaultToX(1, [PulseAlternative.CP, PulseAlternative.Square,]),
+                        11 => AlternativesDefaultToX(1, [PulseAlternative.CP, PulseAlternative.ShiftedCP, PulseAlternative.Square,]),
                         13 => AlternativesDefaultToX(1, [PulseAlternative.CP, PulseAlternative.Square,]),
                         17 => AlternativesDefaultToX(1, [PulseAlternative.CP, PulseAlternative.Square,]),
-                        _ => [PulseAlternative.Default, PulseAlternative.CP, PulseAlternative.Square,],
+                        _ => (PulseCount + 1) % 4 == 0
+                            ? [PulseAlternative.Default, PulseAlternative.CP, PulseAlternative.ShiftedCP, PulseAlternative.Square,]
+                            : [PulseAlternative.Default, PulseAlternative.CP, PulseAlternative.Square,],
                     };
                 }
 
@@ -204,6 +206,7 @@ namespace VvvfSimulator.Vvvf.Model
                 if (PulseMode.PulseType == PulseTypeName.ΔΣ) return true;
                 if (PulseMode.BaseWave >= BaseWaveType.SV) return false;
                 if (PulseMode.Alternative == PulseAlternative.CP) return true;
+                if (PulseMode.Alternative == PulseAlternative.ShiftedCP) return false;
                 if (PulseMode.Alternative > PulseAlternative.Default) return false;
                 if (PulseMode.PulseType == PulseTypeName.SYNC)
                 {
@@ -281,6 +284,7 @@ namespace VvvfSimulator.Vvvf.Model
                     if (PulseMode.PulseCount == 11 && PulseMode.Alternative == PulseAlternative.Alt1) return false;
                     if ((PulseMode.PulseCount == 6 || PulseMode.PulseCount == 8) && PulseMode.Alternative == PulseAlternative.Alt1) return false;
                     if (PulseMode.Alternative == PulseAlternative.CP) return false;
+                    if (PulseMode.Alternative == PulseAlternative.ShiftedCP) return false;
                     if (PulseMode.Alternative == PulseAlternative.Square) return false;
                 }
                 return true;
@@ -314,25 +318,29 @@ namespace VvvfSimulator.Vvvf.Model
             {
                 return PulseMode.PulseType switch
                 {
+                    PulseTypeName.ASYNC => [PulseDataKey.CarrierFolding],
                     PulseTypeName.SYNC => PulseMode.PulseCount switch
                     {
                         3 => PulseMode.Alternative switch
                         {
                             PulseAlternative.Alt1 => [PulseDataKey.Phase],
-                            _ => [],
+                            PulseAlternative.Alt2 => [PulseDataKey.PulseWidth],
+                            PulseAlternative.Alt3 => [PulseDataKey.PulseWidth],
+                            _ => [PulseDataKey.CarrierFolding],
                         },
-                        6 => PulseMode.Alternative switch
+                        5 or 9 or 11 or 13 or 17 => PulseMode.Alternative switch
+                        {
+                            PulseAlternative.Alt1 => [],
+                            _ => [PulseDataKey.CarrierFolding],
+                        },
+                        6 or 8=> PulseMode.Alternative switch
                         {
                             PulseAlternative.Alt1 => [PulseDataKey.PulseWidth],
-                            _ => [],
+                            _ => [PulseDataKey.CarrierFolding],
                         },
-                        8 => PulseMode.Alternative switch
-                        {
-                            PulseAlternative.Alt1 => [PulseDataKey.PulseWidth],
-                            _ => [],
-                        },
-                        _ => []
+                         _ => [PulseDataKey.CarrierFolding]
                     },
+                    PulseTypeName.HO => [PulseDataKey.PulseWidth],
                     PulseTypeName.ΔΣ => [PulseDataKey.UpdateFrequency],
                     _ => []
                 };
@@ -349,6 +357,7 @@ namespace VvvfSimulator.Vvvf.Model
                         {
                             PulseAlternative.Alt1 => [PulseDataKey.PulseWidth],
                             PulseAlternative.Alt2 => [PulseDataKey.PulseWidth],
+                            PulseAlternative.Alt3 => [],
                             _ => [PulseDataKey.Dipolar],
                         },
                         _ => [PulseDataKey.Dipolar]
@@ -366,8 +375,9 @@ namespace VvvfSimulator.Vvvf.Model
             {
                 PulseDataKey.Dipolar => -1,
                 PulseDataKey.Phase => 0,
-                PulseDataKey.PulseWidth => 0.2,
+                PulseDataKey.PulseWidth => 1,
                 PulseDataKey.UpdateFrequency => 440,
+                PulseDataKey.CarrierFolding => 1,
                 _ => 0,
             };
         }

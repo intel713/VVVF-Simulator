@@ -72,7 +72,7 @@ namespace VvvfSimulator.Vvvf.Calculation
             {
                 double X = GetBaseWaveParameter(Control, Phase, InitialPhase).X;
                 int Sector = (int)(X % M_2PI / M_PI_6);
-                return (double)(Sector switch 
+                return (double)(Sector switch
                 {
                     0 or 9 => Control.ElectricalState.BaseWaveAmplitude * Sine(X) + (1 - Control.ElectricalState.BaseWaveAmplitude * Sine(GetBaseWaveParameter(Control, Phase, InitialPhase + M_2PI_3).X)),
                     1 or 4 => 1,
@@ -150,7 +150,7 @@ namespace VvvfSimulator.Vvvf.Calculation
             {
                 double X = GetBaseWaveParameter(Control, Phase, InitialPhase).X;
                 double GetModifiedSine(double X, int Level) => Math.Round(Sine(X) * Level) / Level;
-                double GetModifiedSaw(double X)
+                double GetModifiedTriangle(double X)
                 {
                     double Y = Triangle(X) * M_PI_2;
                     if (Math.Abs(Y) > 0.5) Y = Y > 0 ? 1 : -1;
@@ -159,11 +159,11 @@ namespace VvvfSimulator.Vvvf.Calculation
                 double BaseWave = (double)(Control.ElectricalState.BaseWaveAmplitude * Control.ElectricalState.PulsePattern.PulseMode.BaseWave switch
                 {
                     BaseWaveType.Sine => Sine(X),
-                    BaseWaveType.Saw => Triangle(X),
+                    BaseWaveType.Triangle => Triangle(X),
                     BaseWaveType.Square => Square(X),
                     BaseWaveType.ModifiedSine1 => GetModifiedSine(X, 1),
                     BaseWaveType.ModifiedSine2 => GetModifiedSine(X, 2),
-                    BaseWaveType.ModifiedSaw1 => GetModifiedSaw(X),
+                    BaseWaveType.ModifiedTriangle1 => GetModifiedTriangle(X),
                     _ => 0
                 });
 
@@ -173,14 +173,19 @@ namespace VvvfSimulator.Vvvf.Calculation
                     PulseHarmonic HarmonicData = Control.ElectricalState.PulsePattern.PulseMode.PulseHarmonics[i];
                     double HarmonicX = HarmonicData.IsHarmonicProportional switch
                     {
-                        true => HarmonicData.Harmonic * (X + HarmonicData.InitialPhase),
+                        true => HarmonicData.Harmonic * (X + HarmonicData.InitialPhase / 180.0 * M_PI),
                         false => M_2PI * HarmonicData.Harmonic * (Control.GetTime() + InitialPhase)
                     };
                     HarmonicWave += (double)(HarmonicData.Type switch
                     {
                         PulseHarmonic.PulseHarmonicType.Sine => Sine(HarmonicX),
-                        PulseHarmonic.PulseHarmonicType.Saw => Triangle(HarmonicX),
+                        PulseHarmonic.PulseHarmonicType.Triangle => Triangle(HarmonicX),
                         PulseHarmonic.PulseHarmonicType.Square => Square(HarmonicX),
+                        PulseHarmonic.PulseHarmonicType.HFI => Sine(X) * (HarmonicData.IsHarmonicProportional switch
+                        {
+                            true => Square((Control.GetCarrierInstance().Phase + M_PI_2) / HarmonicData.Harmonic + HarmonicData.InitialPhase / 180.0 * M_PI),
+                            false => Square(M_2PI * HarmonicData.Harmonic * Control.GetTime() + M_PI_2 * (HarmonicData.Harmonic / Control.GetCarrierInstance().Frequency) + HarmonicData.InitialPhase / 180.0 * M_PI),
+                        }),
                         _ => 0,
                     } * HarmonicData.Amplitude * (HarmonicData.IsAmplitudeProportional ? Control.ElectricalState.BaseWaveAmplitude : 1));
                 }
@@ -237,10 +242,10 @@ namespace VvvfSimulator.Vvvf.Calculation
         public static PhaseState CalculatePhsaseState(Domain Control, double InitialPhase)
         {
             PhaseState State = new(0, 0, 0);
-            if(!Control.ElectricalState.IsNone && !Control.ElectricalState.IsZeroOutput)
+            if (!Control.ElectricalState.IsNone && !Control.ElectricalState.IsZeroOutput)
                 State = GetCalculator(Control.ElectricalState.PwmLevel, Control.ElectricalState.PulsePattern.PulseMode.PulseType)(Control, InitialPhase);
             Control.Motor.Process(Control.GetDeltaTime(), Control.ElectricalState.BaseWaveAngleFrequency, State);
             return State;
-        }        
+        }
     }
 }

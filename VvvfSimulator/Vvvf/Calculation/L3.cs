@@ -1,4 +1,5 @@
-﻿using VvvfSimulator.Vvvf.Modulation;
+﻿using System;
+using VvvfSimulator.Vvvf.Modulation;
 using static VvvfSimulator.Data.Vvvf.Struct.PulseControl.Pulse;
 using static VvvfSimulator.Vvvf.Model.Struct;
 using static VvvfSimulator.Vvvf.MyMath;
@@ -93,6 +94,27 @@ namespace VvvfSimulator.Vvvf.Calculation
                 };
 
                 return Orthant <= 1 ? Common.ModulateSignal(SineVal, SawVal) + 1 : -Common.ModulateSignal(SawVal, SineVal) + 1;
+            }
+
+            if (Domain.ElectricalState.PulsePattern.PulseMode.PulseCount == 5 && Domain.ElectricalState.PulsePattern.PulseMode.Alternative == PulseAlternative.Alt3)
+            {
+                double x = X % M_2PI;
+                int Orthant = (int)(x / (M_PI_2)) % 4;
+
+                int _GetPwm(double t, double a)
+                {
+                    if (M_PI_6 * Math.Abs(a - 0.5) <= t && t < M_PI_12) return 1;
+                    else if (M_PI_2 - 5 * M_PI_12 * a <= t && t < M_PI_2) return 1;
+                    else return 0;
+                }
+
+                return 1 + Orthant switch
+                {
+                    0 => _GetPwm(x, (double)Domain.ElectricalState.BaseWaveAmplitude),
+                    1 => _GetPwm(M_PI - x, (double)Domain.ElectricalState.BaseWaveAmplitude),
+                    2 => -_GetPwm(x - M_PI, (double)Domain.ElectricalState.BaseWaveAmplitude),
+                    _ => -_GetPwm(M_2PI - x, (double)Domain.ElectricalState.BaseWaveAmplitude)
+                };
             }
 
             { // nP DEFAULT
