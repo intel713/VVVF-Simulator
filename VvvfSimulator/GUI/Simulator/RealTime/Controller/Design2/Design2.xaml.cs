@@ -148,11 +148,11 @@ namespace VvvfSimulator.GUI.Simulator.RealTime.Controller.Design2
                     }
 
                     PhaseState[] Pwm;
-                    if (RealTimeConfig.LimitWaveformCalculation && Control.ElectricalState.BaseWaveFrequency > RealTimeConfig.WaveformCalculationFrequency)
+                    if (RealTimeConfig.LimitWaveformCalculation && Control.ElectricalState.BaseWaveFrequency < RealTimeConfig.WaveformCalculationFrequency)
                     {
-                        Pwm = GenerateBasic.WaveForm.GetUVWCycle(Control, InitialPhase, CalculatePrecision, false);
+                        Pwm = [new(0, 0, 0)];
                     }
-                    else Pwm = [new(0, 0, 0)];
+                    else Pwm = GenerateBasic.WaveForm.GetUVWCycle(Control, InitialPhase, CalculatePrecision, false);
 
                     double voltage = GenerateBasic.Fourier.GetVoltageRate(ref Pwm) * 100;
                     Model.Voltage = Param.Control.ElectricalState.IsNone ? LanguageManager.GetString("Simulator.RealTime.Controller.Voltage.None") : voltage.ToString("F1");
